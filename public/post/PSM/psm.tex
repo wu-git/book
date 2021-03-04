@@ -1,0 +1,462 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdftitle={Propensity score methods-I PS Matching},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+% https://github.com/rstudio/rmarkdown/issues/337
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+% https://github.com/rstudio/rmarkdown/pull/252
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
+
+\pretitle{\vspace{\droptitle}\centering\huge}
+\posttitle{\par}
+
+\preauthor{\centering\large\emph}
+\postauthor{\par}
+
+\predate{\centering\large\emph}
+\postdate{\par}
+
+\title{Propensity score methods-I PS Matching}
+\date{}
+
+\begin{document}
+\maketitle
+
+Propensity score methods include 1) propensity score matching; 2)
+stratification on the propensity score; 3)IPTW: inverse probability of
+treatment weighting; 4) covariate adjustment using the propensity score.
+The codes below only apply to propensity score matching.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Variables considering in the model: To correctly specify the
+  propensity score model, one should include the true confounders (the
+  risk factors that are associated with the `treatment' and outcome) and
+  the potential confounders (the risk facotrs that are associated with
+  the outcome). A safe way to do when sample size is not a concern is to
+  include all baseline risk factors, but this will reduce the matching
+  rate expecially when sample size is small.
+\item
+  To check balance of propensity score matched sample, one should use
+  standardized difference. A threshold of less than 10\% of standardized
+  difference may be used to consider balancing between treatment and
+  control group. Using p-values to determine balance may be discouraged
+  given that 1)p-values are sensitive to sample size. 2) p values are
+  inference from a ``superpopulation'', the balance is an attribute to
+  the particular matched sample. One could calculate the standardized
+  difference with the following codes, or use the following formula.
+\end{enumerate}
+
+The standardized difference for a continous variable is
+
+\[ d= \frac {\overline{x}_{treatment}-\overline{x}_{control}}{\sqrt {\frac{s^2_{treatment}+s^2_{control}}{2}}} \]
+
+The standardized difference for a binary variable is
+
+\[ d=\frac {\hat{p}_{treatment}-\hat{p}_{control}}{\sqrt {\frac{\hat{p}_{treatment} (1-\hat{p}_{treatment})+ \hat{p}_{control} (1-\hat{p}_{control})}{2}}} \]
+
+Reference: Peter C. Austin.An Introduction to Propensity Score Methods
+for Reducing the Effects of Confounding in Observational Studies.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{/}\ErrorTok{*}\NormalTok{using the logistic model to build propensity score model }\ControlFlowTok{for}\NormalTok{ having autologous }\KeywordTok{blood}\NormalTok{ (variable}\OperatorTok{:}\StringTok{ }\NormalTok{autoblood) }
+\OperatorTok{/}\ErrorTok{*}\NormalTok{(autologous blood is done before cardiac surgery to collect the patients own blood); }
+
+\OperatorTok{*}\StringTok{ }\NormalTok{rename autoblood as the treatment group; }
+\NormalTok{data dat; set dat; group=AutoBlood; run;}
+\OperatorTok{*}\StringTok{ }\NormalTok{assign the subject id; }
+\NormalTok{data dat; set dat; subject_id=_n_;run;}
+
+
+\OperatorTok{*}\StringTok{ }\NormalTok{the propensity score model }\ControlFlowTok{for}\NormalTok{ treatment group; }
+\NormalTok{ proc logistic data=dat descending outest=betas; }
+\NormalTok{   class  gender CAD_ Any_RF_Preop AcuteStroke PriorCardSx cardiogenicShock severe_AI }\OperatorTok{/}\NormalTok{param=ref ;}
+\NormalTok{   model }\KeywordTok{AutoBlood}\NormalTok{ (}\DataTypeTok{event=}\StringTok{'1'}\NormalTok{)=}\StringTok{  }\NormalTok{age_at_operation  BMI RFHemoglobin_ gender AcuteStroke PriorCardSx cardiogenicShock    ; }
+  \OperatorTok{*}\NormalTok{output the dataset }\StringTok{"predic"}\NormalTok{ which have predprob}\OperatorTok{:}\StringTok{ }\NormalTok{predprob is the probability scale, and xbeta is the linear predictor;}
+\NormalTok{   output out=predic p=predprob xbeta=logit; }
+\NormalTok{run;}
+
+\OperatorTok{*}\StringTok{ }\ControlFlowTok{if}\NormalTok{ using the probability scale as the propensity score to do matching, then using predprob as the pscoreT}\OperatorTok{/}\NormalTok{C;}
+\OperatorTok{*}\StringTok{ }\ControlFlowTok{if}\NormalTok{ using the logit scale as the propensity score }\ControlFlowTok{for}\NormalTok{ matching, then using xbeta as the pscoreT}\OperatorTok{/}\NormalTok{C; }
+\NormalTok{data }\KeywordTok{treatment}\NormalTok{(}\DataTypeTok{rename =}\NormalTok{(}\DataTypeTok{subject_id=}\NormalTok{idT }\DataTypeTok{logit=}\NormalTok{ pscoreT  ) );set predic; where group=}\DecValTok{1}\NormalTok{ ; run;}
+\NormalTok{data }\KeywordTok{control}\NormalTok{ (}\DataTypeTok{rename =}\NormalTok{(}\DataTypeTok{subject_id=}\NormalTok{idC }\DataTypeTok{logit=}\NormalTok{ pscoreC) ); set predic; where group=}\DecValTok{0}\NormalTok{; run;}
+
+\OperatorTok{*}\StringTok{ }\NormalTok{using the propensity score matching macro; }
+\NormalTok{%include }\StringTok{'xx\textbackslash{}propensity score matching macro\textbackslash{}psmatching.sas'}\NormalTok{;}
+
+\NormalTok{proc means data=predic; var logit; output out=}\KeywordTok{stddata}\NormalTok{ (}\DataTypeTok{keep =}\NormalTok{std) std=std;run; }
+
+\OperatorTok{*}\StringTok{ }\NormalTok{using the }\FloatTok{0.1}\NormalTok{ standardard deviation of the propensity score as the caliper }\ControlFlowTok{for}\NormalTok{ finding matching; }
+\NormalTok{data stddata; set stddata; caliper=}\FloatTok{0.1}\OperatorTok{*}\NormalTok{std;run;  }
+
+
+\OperatorTok{*}\NormalTok{one}\OperatorTok{-}\NormalTok{to}\OperatorTok{-}\NormalTok{one matching, no replacement, caliper matching; }
+\NormalTok{%}\KeywordTok{PSMatching}\NormalTok{(}\DataTypeTok{datatreatment=}\NormalTok{ treatment, }\DataTypeTok{datacontrol=}\NormalTok{ control, }\DataTypeTok{method=}\NormalTok{ CALIPER,}
+      \DataTypeTok{numberofcontrols=}\DecValTok{1}\NormalTok{, }\DataTypeTok{caliper=}\FloatTok{0.0844}\NormalTok{, }\DataTypeTok{replacement=}\NormalTok{ no, }\DataTypeTok{out=}\NormalTok{ caliper_matches2);  }
+
+
+\NormalTok{data }\KeywordTok{treatment2}\NormalTok{ (}\DataTypeTok{keep=}\NormalTok{idT  }\DataTypeTok{rename=}\NormalTok{(}\DataTypeTok{idT=}\NormalTok{MatchedToTreatID) ); set treatment;run;}
+\NormalTok{data }\KeywordTok{control2}\NormalTok{ (}\DataTypeTok{keep=}\NormalTok{idC  }\DataTypeTok{rename=}\NormalTok{(}\DataTypeTok{idC=}\NormalTok{IdSelectedControl  )); set control;run;}
+
+\NormalTok{proc sort data=caliper_matches2 nodupkey out=test2; by MatchedToTreatID;run;   }
+
+\OperatorTok{*}\StringTok{ }\NormalTok{create the data }\ControlFlowTok{for}\NormalTok{ matching sample; }
+\NormalTok{data caliper_pairs;}
+\NormalTok{    set  caliper_matches2;}
+\NormalTok{    subject_id =}\StringTok{ }\NormalTok{IdSelectedControl; pscore =}\StringTok{ }\NormalTok{PScoreControl; pair =}\StringTok{ }\NormalTok{_N_;}
+\NormalTok{    output;}
+\NormalTok{    subject_id =}\StringTok{ }\NormalTok{MatchedToTreatID; pscore =}\StringTok{ }\NormalTok{PScoreTreat; pair =}\StringTok{ }\NormalTok{_N_;}
+\NormalTok{    output;}
+\NormalTok{    keep subject_id  pscore pair;run;}
+
+\OperatorTok{*}\StringTok{ }\NormalTok{merging the dataset with the original sample to have the other covariates; }
+\NormalTok{proc sort data=dat; by subject_id;run;}
+\NormalTok{proc sort data=caliper_pairs; by subject_id;run;}
+
+\NormalTok{data merge_pairs; }
+\NormalTok{   merge }\KeywordTok{caliper_pairs}\NormalTok{ (}\DataTypeTok{in=}\NormalTok{a) }\KeywordTok{dat}\NormalTok{ (}\DataTypeTok{in=}\NormalTok{b); }
+\NormalTok{   by subject_id;}
+   \ControlFlowTok{if}\NormalTok{ a=}\DecValTok{1}\NormalTok{ and b=}\DecValTok{1}\NormalTok{;run;}
+
+
+\OperatorTok{*}\NormalTok{check balance }\ControlFlowTok{for}\NormalTok{ continuous variables by plotting the empirical distribution between treatment and control groups ; }
+
+\NormalTok{proc npar1way d edf plots=edfplot data=merge_pairs  scores=data;}
+\NormalTok{class group;}
+\NormalTok{var pscore  age_at_operation  BMI RFHemoglobin_  ;}
+\NormalTok{run;}
+
+
+\NormalTok{proc sort data=merge_pairs; by group;run;}
+\NormalTok{proc means  data=merge_pairs mean median p25 p75; }
+\NormalTok{var age_ pre_op_creatinine ef__pre_; }
+\NormalTok{class group;}
+\NormalTok{run;}
+
+
+\OperatorTok{*}\StringTok{ }\NormalTok{MACRO}\OperatorTok{:}\StringTok{ }\NormalTok{use standardized difference }\ControlFlowTok{for}\NormalTok{ checking balance }\ControlFlowTok{for}\NormalTok{ binary variables;}
+\NormalTok{%macro }\KeywordTok{binary}\NormalTok{ (}\DataTypeTok{var=}\NormalTok{, }\DataTypeTok{label=}\NormalTok{);}
+\NormalTok{proc means  data=merge_pairs mean noprint; }
+\NormalTok{var }\OperatorTok{&}\NormalTok{var; }
+\NormalTok{by group;}
+\NormalTok{output out=}\KeywordTok{outmean}\NormalTok{ (}\DataTypeTok{keep=}\NormalTok{group mean ) mean=mean ;}
+\NormalTok{run;}
+
+\NormalTok{data del0; set outmean; }\ControlFlowTok{if}\NormalTok{ group=}\DecValTok{0}\NormalTok{; mean_}\DecValTok{0}\NormalTok{ =mean;  keep mean_}\DecValTok{0}\NormalTok{;run;}
+\NormalTok{data del1; set outmean; }\ControlFlowTok{if}\NormalTok{ group=}\DecValTok{1}\NormalTok{; mean_}\DecValTok{1}\NormalTok{ =mean;  keep mean_}\DecValTok{1}\NormalTok{;run;}
+
+
+\NormalTok{data newdata; }
+\NormalTok{  length label }\OperatorTok{$}\DecValTok{25}\NormalTok{;}
+\NormalTok{  merge del0 del1;}
+\NormalTok{  d=}\StringTok{ }\NormalTok{(mean_}\DecValTok{1}\OperatorTok{-}\NormalTok{mean_}\DecValTok{0}\NormalTok{)}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{ ((mean_}\DecValTok{1}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{mean_}\DecValTok{1}\NormalTok{)}\OperatorTok{+}\NormalTok{mean_}\DecValTok{0}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{mean_}\DecValTok{0}\NormalTok{))}\OperatorTok{/}\DecValTok{2}\NormalTok{);}
+\NormalTok{  d=}\KeywordTok{round}\NormalTok{(}\KeywordTok{abs}\NormalTok{(d),}\FloatTok{0.0001}\NormalTok{);}
+\NormalTok{  label=}\ErrorTok{&}\NormalTok{label;}
+\NormalTok{  keep d label;}
+\NormalTok{  run;}
+
+\NormalTok{  proc append data=newdata base=}\KeywordTok{standiff}\NormalTok{ (}\DataTypeTok{keep=}\NormalTok{d label) force;run;}
+\NormalTok{  %mend binary;}
+\NormalTok{proc sort data=merge_pairs; by group;run;}
+
+
+\OperatorTok{*}\StringTok{ }\NormalTok{make sure the variables were coded as numeric variables; }
+\NormalTok{data merge_pairs; set merge_pairs; }\ControlFlowTok{if}\NormalTok{ gender=}\StringTok{"1"}\NormalTok{ then gender_=}\DecValTok{1}\NormalTok{; }\ControlFlowTok{else}\NormalTok{ gender_=}\DecValTok{0}\NormalTok{;run;}
+
+\NormalTok{%}\KeywordTok{binary}\NormalTok{ (}\DataTypeTok{var=}\NormalTok{gender_, }\DataTypeTok{label=}\StringTok{"gender"}\NormalTok{)}
+\NormalTok{%}\KeywordTok{binary}\NormalTok{ (}\DataTypeTok{var=}\NormalTok{CAD_, }\DataTypeTok{label=}\StringTok{"CAD_"}\NormalTok{)}
+\NormalTok{%}\KeywordTok{binary}\NormalTok{ (}\DataTypeTok{var=}\NormalTok{severe_AI, }\DataTypeTok{label=}\StringTok{"severe_AI"}\NormalTok{)}
+
+\NormalTok{proc print data=standiff;run;}
+
+
+\OperatorTok{*}\StringTok{ }\NormalTok{using the matching samples, look at outcome difference with the conditional logistic model; }
+\NormalTok{proc logistic data=merge_pairs; }
+\NormalTok{  class }\KeywordTok{group}\NormalTok{ (}\DataTypeTok{ref=}\StringTok{'0'}\NormalTok{);}
+\NormalTok{  model }\KeywordTok{OperativeMortality}\NormalTok{ (}\DataTypeTok{event=}\StringTok{'1'}\NormalTok{)=group; }
+\NormalTok{  strata pair;}
+\NormalTok{  run;}
+
+
+\OperatorTok{*}\StringTok{ }\NormalTok{using the matching samples, look at survival difference with cox model accounting }\ControlFlowTok{for}\NormalTok{ the pairs; }
+\NormalTok{proc phreg data=merge_pairs  ; }
+\NormalTok{class }\KeywordTok{group}\NormalTok{ (}\DataTypeTok{ref=}\StringTok{'0'}\NormalTok{) pair; }
+\NormalTok{model time_since_surgery}\OperatorTok{*}\KeywordTok{death}\NormalTok{ (}\DecValTok{0}\NormalTok{)=group;}
+\NormalTok{random pair;}
+\NormalTok{hazardratio group}\OperatorTok{/}\NormalTok{diff=ref;}
+\NormalTok{run;}
+\end{Highlighting}
+\end{Shaded}
+
+The below is the propensity score matching MACRO :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#SAS Macro for obtaining propensity score matching samples;}
+
+
+\OperatorTok{/}\ErrorTok{************************************************}\StringTok{ }
+\StringTok{    }\NormalTok{PSmatching.sas   adapted from}
+    
+\NormalTok{    Paper }\DecValTok{185}\OperatorTok{-}\DecValTok{2007}\NormalTok{  SAS Global Forum }\DecValTok{2007}
+\NormalTok{    Local and Global Optimal Propensity Score Matching}
+\NormalTok{    Marcelo Coca}\OperatorTok{-}\NormalTok{Perraillon}
+\NormalTok{    Health Care Policy Department, Harvard Medical School, Boston, MA}
+    
+    \OperatorTok{-------------------------------}
+\StringTok{ }\NormalTok{Treatment and Control observations must be }\ControlFlowTok{in}\NormalTok{ separate datasets such that }
+\NormalTok{    Control data includes}\OperatorTok{:}\StringTok{ }\NormalTok{idC =}\StringTok{  }\NormalTok{subject_id, pscoreC =}\StringTok{ }\NormalTok{propensity score}
+\NormalTok{    Treatment data includes}\OperatorTok{:}\StringTok{ }\NormalTok{idT, pscoreT}
+\NormalTok{    id must be numeric  }
+    
+\NormalTok{    method =}\StringTok{ }\KeywordTok{NN}\NormalTok{ (nearest neighbor), caliper, or radius }
+    
+\NormalTok{    caliper value =}\StringTok{ }\NormalTok{max }\ControlFlowTok{for}\NormalTok{ matching}
+    
+\NormalTok{    replacement =}\StringTok{ }\NormalTok{yes}\OperatorTok{/}\NormalTok{no  whether controls can be matched to more than one case}
+    
+\NormalTok{    out =}\StringTok{ }\NormalTok{output data set name}
+    
+\NormalTok{    example call}\OperatorTok{:}
+\StringTok{    }
+\StringTok{     }\NormalTok{%}\KeywordTok{PSMatching}\NormalTok{(}\DataTypeTok{datatreatment=}\NormalTok{ T, }\DataTypeTok{datacontrol=}\NormalTok{ C, }\DataTypeTok{method=}\NormalTok{ NN,}
+      \DataTypeTok{numberofcontrols=} \DecValTok{1}\NormalTok{, }\DataTypeTok{caliper=}\NormalTok{, }\DataTypeTok{replacement=}\NormalTok{ no, }\DataTypeTok{out=}\NormalTok{ matches);}
+      
+\NormalTok{ Output format}\OperatorTok{:}
+\StringTok{           }\NormalTok{Id                  Matched}
+\NormalTok{       Selected     PScore       To       PScore}
+\NormalTok{Obs     Control    Control    TreatID     Treat}
+  \DecValTok{1}      \DecValTok{18628}     \FloatTok{0.39192}     \DecValTok{16143}     \FloatTok{0.39192}
+  \DecValTok{2}      \DecValTok{18505}     \FloatTok{0.23029}     \DecValTok{16158}     \FloatTok{0.23002}
+  \DecValTok{3}      \DecValTok{15589}     \FloatTok{0.29260}     \DecValTok{16112}     \FloatTok{0.29260}
+
+\NormalTok{All other variables discarded.   Reformat }\ControlFlowTok{for}\NormalTok{ merge on subject_id with original data}\OperatorTok{:}
+
+\StringTok{  }\NormalTok{data pairs;}
+\NormalTok{    set  matches;}
+\NormalTok{    subject_id =}\StringTok{ }\NormalTok{IdSelectedControl; pscore =}\StringTok{ }\NormalTok{PScoreControl; pair =}\StringTok{ }\NormalTok{_N_;}
+\NormalTok{    output;}
+\NormalTok{    subject_id =}\StringTok{ }\NormalTok{MatchedToTreatID; pscore =}\StringTok{ }\NormalTok{PScoreTreat; pair =}\StringTok{ }\NormalTok{_N_;}
+\NormalTok{    output;}
+\NormalTok{    keep subject_id pscore pair;}
+
+
+\OperatorTok{**}\ErrorTok{**********************************************/}
+
+\NormalTok{%macro }\KeywordTok{PSMatching}\NormalTok{(}\DataTypeTok{datatreatment=}\NormalTok{, }\DataTypeTok{datacontrol=}\NormalTok{, }\DataTypeTok{method=}\NormalTok{, }\DataTypeTok{numberofcontrols=}\NormalTok{, }\DataTypeTok{caliper=}\NormalTok{,}
+ \DataTypeTok{replacement=}\NormalTok{, }\DataTypeTok{out=}\NormalTok{);}
+
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Create copies of the treated units }\ControlFlowTok{if}\NormalTok{ N }\OperatorTok{>}\StringTok{ }\DecValTok{1} \OperatorTok{*}\ErrorTok{/}\NormalTok{;}
+\NormalTok{ data }\KeywordTok{_Treatment0}\NormalTok{(}\DataTypeTok{drop=}\NormalTok{ i);}
+\NormalTok{  set }\OperatorTok{&}\NormalTok{datatreatment;}
+\NormalTok{  do i=}\StringTok{ }\DecValTok{1}\NormalTok{ to }\OperatorTok{&}\NormalTok{numberofcontrols;}
+\NormalTok{  RandomNumber=}\StringTok{ }\KeywordTok{ranuni}\NormalTok{(}\DecValTok{12345}\NormalTok{);}
+\NormalTok{output;}
+\NormalTok{end;}
+\NormalTok{run;}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Randomly sort both datasets }\OperatorTok{*}\ErrorTok{/}
+\NormalTok{proc sort data=}\StringTok{ }\NormalTok{_Treatment0 out=}\StringTok{ }\KeywordTok{_Treatment}\NormalTok{(}\DataTypeTok{drop=}\NormalTok{ RandomNumber);}
+\NormalTok{by RandomNumber;}
+\NormalTok{run;}
+\NormalTok{data _Control0;}
+\NormalTok{set }\OperatorTok{&}\NormalTok{datacontrol;}
+\NormalTok{RandomNumber=}\StringTok{ }\KeywordTok{ranuni}\NormalTok{(}\DecValTok{45678}\NormalTok{);}
+\NormalTok{run;}
+\NormalTok{proc sort data=}\StringTok{ }\NormalTok{_Control0 out=}\StringTok{ }\KeywordTok{_Control}\NormalTok{(}\DataTypeTok{drop=}\NormalTok{ RandomNumber);}
+\NormalTok{by RandomNumber;}
+\NormalTok{run;}
+
+\NormalTok{ data }\KeywordTok{Matched}\NormalTok{(}\DataTypeTok{keep =}\NormalTok{ IdSelectedControl PScoreControl MatchedToTreatID PScoreTreat);}
+\NormalTok{  length pscoreC }\DecValTok{8}\NormalTok{;}
+\NormalTok{  length idC }\DecValTok{8}\NormalTok{;}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Load Control dataset into the hash object }\OperatorTok{*}\ErrorTok{/}
+\StringTok{  }\ControlFlowTok{if}\NormalTok{ _N_=}\StringTok{ }\DecValTok{1}\NormalTok{ then do;}
+\NormalTok{declare hash }\KeywordTok{h}\NormalTok{(dataset}\OperatorTok{:}\StringTok{ "_Control"}\NormalTok{, ordered}\OperatorTok{:}\StringTok{ 'no'}\NormalTok{);}
+\NormalTok{declare hiter }\KeywordTok{iter}\NormalTok{(}\StringTok{'h'}\NormalTok{);}
+\KeywordTok{h.defineKey}\NormalTok{(}\StringTok{'idC'}\NormalTok{);}
+\KeywordTok{h.defineData}\NormalTok{(}\StringTok{'pscoreC'}\NormalTok{, }\StringTok{'idC'}\NormalTok{);}
+\KeywordTok{h.defineDone}\NormalTok{();}
+\NormalTok{call }\KeywordTok{missing}\NormalTok{(idC, pscoreC);}
+\NormalTok{end;}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Open the treatment }\OperatorTok{*}\ErrorTok{/}
+\NormalTok{set _Treatment;}
+\OperatorTok{%if %}\KeywordTok{upcase}\NormalTok{(}\OperatorTok{&}\NormalTok{method) }\OperatorTok{~}\ErrorTok{=}\StringTok{ }\NormalTok{RADIUS }\OperatorTok{%then %}\NormalTok{do;}
+\NormalTok{retain BestDistance }\DecValTok{99}\NormalTok{;}
+\NormalTok{%end;}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Iterate over the hash }\OperatorTok{*}\ErrorTok{/}
+\NormalTok{rc=}\StringTok{ }\KeywordTok{iter.first}\NormalTok{();}
+\ControlFlowTok{if}\NormalTok{ (}\DataTypeTok{rc=}\DecValTok{0}\NormalTok{) then BestDistance=}\StringTok{ }\DecValTok{99}\NormalTok{;}
+\NormalTok{do }\ControlFlowTok{while}\NormalTok{ (}\DataTypeTok{rc =} \DecValTok{0}\NormalTok{);}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Caliper }\OperatorTok{*}\ErrorTok{/}
+\OperatorTok{%if %}\KeywordTok{upcase}\NormalTok{(}\OperatorTok{&}\NormalTok{method) =}\StringTok{ }\NormalTok{CALIPER }\OperatorTok{%then %}\NormalTok{do;}
+\ControlFlowTok{if}\NormalTok{ (pscoreT }\OperatorTok{-}\StringTok{ }\ErrorTok{&}\NormalTok{caliper) }\OperatorTok{<=}\StringTok{ }\NormalTok{pscoreC }\OperatorTok{<=}\StringTok{ }\NormalTok{(pscoreT }\OperatorTok{+}\StringTok{ }\ErrorTok{&}\NormalTok{caliper) then do;}
+\NormalTok{ScoreDistance =}\StringTok{ }\KeywordTok{abs}\NormalTok{(pscoreT }\OperatorTok{-}\StringTok{ }\NormalTok{pscoreC);}
+\ControlFlowTok{if}\NormalTok{ ScoreDistance }\OperatorTok{<}\StringTok{ }\NormalTok{BestDistance then do;}
+\NormalTok{BestDistance =}\StringTok{ }\NormalTok{ScoreDistance;}
+\NormalTok{IdSelectedControl =}\StringTok{ }\NormalTok{idC;}
+\NormalTok{PScoreControl =}\StringTok{  }\NormalTok{pscoreC;}
+\NormalTok{MatchedToTreatID =}\StringTok{ }\NormalTok{idT;}
+\NormalTok{PScoreTreat =}\StringTok{ }\NormalTok{pscoreT;}
+\NormalTok{end;}
+\NormalTok{end;}
+\NormalTok{%end;}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{NN }\OperatorTok{*}\ErrorTok{/}
+\OperatorTok{%if %}\KeywordTok{upcase}\NormalTok{(}\OperatorTok{&}\NormalTok{method) =}\StringTok{ }\NormalTok{NN }\OperatorTok{%then %}\NormalTok{do;}
+\NormalTok{ScoreDistance =}\StringTok{ }\KeywordTok{abs}\NormalTok{(pscoreT }\OperatorTok{-}\StringTok{ }\NormalTok{pscoreC);}
+\ControlFlowTok{if}\NormalTok{ ScoreDistance }\OperatorTok{<}\StringTok{ }\NormalTok{BestDistance then do;}
+\NormalTok{BestDistance =}\StringTok{ }\NormalTok{ScoreDistance;}
+\NormalTok{IdSelectedControl =}\StringTok{ }\NormalTok{idC;}
+\NormalTok{PScoreControl =}\StringTok{  }\NormalTok{pscoreC;}
+\NormalTok{MatchedToTreatID =}\StringTok{ }\NormalTok{idT;}
+\NormalTok{PScoreTreat =}\StringTok{ }\NormalTok{pscoreT;}
+\NormalTok{end;}
+\NormalTok{%end;}
+
+\OperatorTok{%if %}\KeywordTok{upcase}\NormalTok{(}\OperatorTok{&}\NormalTok{method) =}\StringTok{ }\NormalTok{NN or }\OperatorTok{%upcase(&method) = CALIPER %}\NormalTok{then %do;}
+\NormalTok{rc =}\StringTok{ }\KeywordTok{iter.next}\NormalTok{();}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Output the best control and remove it }\OperatorTok{*}\ErrorTok{/}
+\ControlFlowTok{if}\NormalTok{ (rc }\OperatorTok{~}\ErrorTok{=}\StringTok{ }\DecValTok{0}\NormalTok{) and BestDistance }\OperatorTok{~}\ErrorTok{=}\DecValTok{99}\NormalTok{ then do;}
+\NormalTok{output;}
+\OperatorTok{%if %}\KeywordTok{upcase}\NormalTok{(}\OperatorTok{&}\NormalTok{replacement) =}\StringTok{ }\NormalTok{NO }\OperatorTok{%then %}\NormalTok{do;}
+\NormalTok{rc1 =}\StringTok{ }\KeywordTok{h.remove}\NormalTok{(key}\OperatorTok{:}\StringTok{ }\NormalTok{IdSelectedControl);}
+\NormalTok{%end;}
+\NormalTok{end;}
+\NormalTok{%end;}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Radius }\OperatorTok{*}\ErrorTok{/}
+\OperatorTok{%if %}\KeywordTok{upcase}\NormalTok{(}\OperatorTok{&}\NormalTok{method) =}\StringTok{ }\NormalTok{RADIUS }\OperatorTok{%then %}\NormalTok{do;}
+\ControlFlowTok{if}\NormalTok{ (pscoreT }\OperatorTok{-}\StringTok{ }\ErrorTok{&}\NormalTok{caliper) }\OperatorTok{<=}\StringTok{ }\NormalTok{pscoreC }\OperatorTok{<=}\StringTok{ }\NormalTok{(pscoreT }\OperatorTok{+}\StringTok{ }\ErrorTok{&}\NormalTok{caliper) then do;}
+\NormalTok{IdSelectedControl =}\StringTok{ }\NormalTok{idC;}
+\NormalTok{PScoreControl =}\StringTok{  }\NormalTok{pscoreC;}
+\NormalTok{MatchedToTreatID =}\StringTok{ }\NormalTok{idT;}
+\NormalTok{PScoreTreat =}\StringTok{ }\NormalTok{pscoreT;}
+\NormalTok{output;}
+\NormalTok{end;}
+\NormalTok{rc =}\StringTok{ }\KeywordTok{iter.next}\NormalTok{();}
+\NormalTok{%end;}
+\NormalTok{end;}
+\NormalTok{run;}
+\OperatorTok{/}\ErrorTok{*}\StringTok{ }\NormalTok{Delete temporary tables. Quote }\ControlFlowTok{for}\NormalTok{ debugging }\OperatorTok{*}\ErrorTok{/}
+\NormalTok{proc datasets;}
+\NormalTok{delete _}\OperatorTok{:}\NormalTok{(}\DataTypeTok{gennum=}\NormalTok{all);}
+
+\NormalTok{run;}
+\NormalTok{ data }\OperatorTok{&}\NormalTok{out;}
+\NormalTok{   set Matched;}
+\NormalTok{ run;}
+\NormalTok{%mend PSMatching;}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}

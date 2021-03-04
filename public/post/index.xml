@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Codes</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Codes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Odds Ratio Forest Plot</title>
+      <link>/post/odds-ratio-forest-plot/odds-ratio-forest-plot/</link>
+      <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/odds-ratio-forest-plot/odds-ratio-forest-plot/</guid>
+      <description>Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,A change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.1 and 0.5 respectively. An odds ratio between 0-1 indicates a decrease of odds, while an odds ratio greater than 1 indicates an increase in odds.</description>
+    </item>
+    
+    <item>
+      <title>Use simulation to calculate power in linear regression model</title>
+      <link>/post/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</link>
+      <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</guid>
+      <description>Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size.</description>
+    </item>
+    
+    <item>
+      <title>Using R Blogdown for Site Building</title>
+      <link>/post/blog-down/blog-down/</link>
+      <pubDate>Thu, 08 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/blog-down/blog-down/</guid>
+      <description>It&amp;rsquo;s such a learning experience in setting up a website using github+ terminal + R blogdown + netlify for me. In general, I followed the post from [Alison Hill] (https://alison.rbind.io/post/up-and-running-with-blogdown/).
+A couple of problems have occured and I have searched very hard to resolve them.
+   R crash whenever I tried to open projects in Mac OS system.    Solution: download update R version from (https://www.rstudio.com/products/rstudio/download/). Now I have Rstudio 1.</description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+    <item>
+      <title>Propensity score methods-I PS Matching</title>
+      <link>/post/PSM/psm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/PSM/psm/</guid>
+      <description>Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.
+Variables considering in the model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome).</description>
+    </item>
+    
+  </channel>
+</rss>

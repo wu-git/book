@@ -1,0 +1,103 @@
+---
+title: "Use simulation to calculate power in linear regression model"
+output: html_document
+author: Ting Wu
+date: '2021-02-10'
+---
+
+
+
+<p>Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size. Be cautious to not to calculate post hoc power, it’s not meaningful to calculate statistical powers for an effect with a known p value.</p>
+<pre class="r"><code>#### use similation to calculate the power in linear regression model###############
+
+library(&#39;plyr&#39;)
+library(&#39;ggplot2&#39;)
+
+# the simulation function; 
+regression_sim &lt;- function(simNum, n, b0, b1, b2, b3,b4,b5, b6, b7, b8,b9,b10, err_mean=0, err_sd=74.45294) {
+  
+  # simulate the dummy variables for hospital admission acuity: status1=elective, status2=urgent; status3=emergent; 
+  status1 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.27, 0.73) )
+  status2 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.95, 0.05) )
+  status3 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.79, 0.21) )
+  
+  # simulate the dummy variables for euroscore risk score strata
+  euroscore3c1 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.67, 0.33) )
+  euroscore3c2 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.67, 0.33) )
+  euroscore3c3 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.67, 0.33) )
+  
+  # simulate the continous variable team familiairty with estimated mean and std; 
+  fourfam &lt;- rnorm(n, mean=23.8, sd=12.1)
+  
+  # the model
+  # generate the outcome y based on the equation; 
+  y &lt;- b0 + (b1 * fourfam) + (b2 * status1)+(b3 * status2)+(b4* status3)+
+    (b5 * euroscore3c1)+(b6 * euroscore3c2)+(b7* euroscore3c3)+
+    (b8 *fourfam* euroscore3c1)+b9 *fourfam* euroscore3c2+b10 *fourfam* euroscore3c3+
+    +rnorm(n, mean=err_mean, sd=err_sd)
+  
+  # fun the model with simulation data; 
+  model &lt;- lm(y ~ fourfam +status1+status2+status3+euroscore3c1+euroscore3c2+euroscore3c3+
+                fourfam* euroscore3c1+fourfam* euroscore3c2+fourfam* euroscore3c3)
+  
+  
+  output &lt;- summary(model)$coefficients
+  
+  # identify the coefficients for the interaction terms; 
+  # look at the power of detecting team familiarity effect on euroscore strata 1, which will be the sum of 
+  #the coefficients of team familairty and the interaction term for team familiarity and euroscore strata 1.
+  # use the delta methods to calculate the variance
+  variance=vcov(model)[2,2]+vcov(model)[9,9]+2*vcov(model)[2,9]
+  
+  # build the wald test; 
+  stat=  (output[2, 1]+output[9, 1]-0 )/sqrt(variance)
+  
+  # obtain p value;
+  p_values&lt;- 2*pnorm(-abs(stat))
+  
+  
+  return(p_values)
+}
+
+regression_sim
+
+num_sims &lt;- 1000
+
+# repeat the function for 1000 simulation for sample size=1000; 
+# the values for coefficients: b0-b10, the mean and std errors are obtained based on a pilot study on existing data.
+# to obtain a certain effect, one may vary the effect by increasing or decreasing 5% of the estimated effect. 
+sims &lt;- ldply(1:num_sims, regression_sim,  n=1000, b0=226.0049100, b1=-2.5294683, b2=0.0000000, b3=-2.5636306,
+              b4=36.0413179,b5=-78.3913251, b6=-42.9765322, b7=0.0000000,
+              b8=1.5820389, b9=1.2321387, b10=0.0000000, err_mean=0, err_sd=74.45294)
+
+# calculate the power. The probability of rejecting the null hypothesis given the alternative hypothesis is true
+power &lt;- sum(sims &lt; .05) / nrow(sims)
+
+
+# calculate power for various sample sizes; 
+sample_sizes &lt;- c(1000,2000, 3000, 4000, 5000)
+results &lt;- NULL
+for (val in sample_sizes) {
+  sims &lt;- ldply(1:100, regression_sim, n=val, b0=226.0049100, b1=-2.5294683, b2=0.0000000, b3=-2.5636306,
+                b4=36.0413179,b5=-78.3913251, b6=-42.9765322, b7=0.0000000,
+                b8=1.5820389, b9=1.2321387, b10=0.0000000, err_mean=0, err_sd=74.45294)
+  sims$n &lt;- val  # add the sample size in as a separate column to our results
+  results &lt;- rbind(results, sims)
+}
+
+
+# conflict between plyr and dplyr. detach plyr, and use library dplyr
+
+detach(&quot;package:plyr&quot;, unload=TRUE)
+library(&#39;dplyr&#39;)
+
+# summary the power for various sample size; 
+power_ests &lt;- results %&gt;%
+  group_by(n) %&gt;% summarize(power=sum(V1 &lt; .05) /length(n))
+
+# plot the power with different sample size;
+ggplot(power_ests, aes(x=n, y=power)) +
+  geom_point() +
+  geom_line() +
+  ylim(c(0, 1)) +
+  theme_minimal()</code></pre>
