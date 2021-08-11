@@ -1,6 +1,6 @@
 baseURL = "http://localhost"
 title = "Codes"
-theme = "hugo-geekdoc"
+theme = "hugo-xmin-master"
 
 # Geekdoc required configuration
 pygmentsUseClasses = true

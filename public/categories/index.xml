@@ -5,7 +5,16 @@
     <link>/categories/</link>
     <description>Recent content in Categories on Codes</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 08 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SAS</title>
+      <link>/categories/SAS/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/SAS/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>R</title>
       <link>/categories/R/</link>

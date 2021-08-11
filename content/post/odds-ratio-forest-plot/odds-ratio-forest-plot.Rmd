@@ -1,11 +1,11 @@
 
 ---
-title: "Odds Ratio Forest Plot"
+title: "Odds Ratio Forest Plot (R)"
 author: Ting Wu
 date: '2021-02-10'
 ---
 
-Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,A change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.1 and 0.5 respectively. An odds ratio between 0-1 indicates a decrease of odds, while an odds ratio greater than 1 indicates an increase in odds.  The standard errors of odds ratio will also be misleading when plotting on a linear scale. Although looking at an x-axis in log scale may not be intuitive, it's a much fair visualization on a log scale when you may compare odds ratio across different risk factors in the forest plot. 
+Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,a change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.1 and 0.5 respectively. An odds ratio between 0-1 indicates a decrease of odds, while an odds ratio greater than 1 indicates an increase in odds.  The standard errors of odds ratio will also be misleading when plotting on a linear scale. Although looking at an x-axis in log scale may not be intuitive, it's a much fair visualization on a log scale when you may compare odds ratio across different risk factors in the forest plot. 
 
 
 ```{r, out.width = "400px", eval=FALSE}

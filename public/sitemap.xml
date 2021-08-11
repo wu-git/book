@@ -4,7 +4,52 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/mixed-effect-model-icc/mixed-effect-and-ICC81121/</loc>
+    <lastmod>2021-08-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-08-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/PSM/psm/</loc>
+    <lastmod>2021-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2021-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/collinearity/collinearity/</loc>
+    <lastmod>2021-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/Repeated-measurements/</loc>
+    <lastmod>2021-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/SAS/</loc>
+    <lastmod>2021-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/longitudinal-plot/longitudinal-plot/</loc>
+    <lastmod>2021-03-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -13,18 +58,8 @@
   </url>
   
   <url>
-    <loc>/post/</loc>
-    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</loc>
     <lastmod>2021-02-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-    <lastmod>2018-11-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -38,11 +73,6 @@
   </url>
   
   <url>
-    <loc>/tags/</loc>
-    <lastmod>2018-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/blog-down/blog-down/</loc>
     <lastmod>2018-11-08T00:00:00+00:00</lastmod>
   </url>
@@ -50,30 +80,6 @@
   <url>
     <loc>/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/2015-07-23-r-rmarkdown/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/plot/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/R-Markdown/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/regression/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/PSM/psm/</loc>
   </url>
   
 </urlset>

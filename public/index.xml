@@ -5,18 +5,56 @@
     <link>/</link>
     <description>Recent content on Codes</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Odds Ratio Forest Plot</title>
+      <title>Mixed effect model simulation and ICC (R)</title>
+      <link>/post/mixed-effect-model-icc/mixed-effect-and-ICC81121/</link>
+      <pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mixed-effect-model-icc/mixed-effect-and-ICC81121/</guid>
+      <description>Data example: Mixed effect model was simulated using parameters obtained from a pilot data. Intraclass correlation coefficient was calculated from the mixed effect model to test the agreement between raters. In this example, videos as the subjects were assessed by different raters, each rater will be assigned to multiple videos. nstand is parameter for the number of videos which will be assessed by various raters (nraters). Given the variation of the rating can be attributed to videos and raters.</description>
+    </item>
+    
+    <item>
+      <title>Propensity score methods-I PS Matching (SAS)</title>
+      <link>/post/PSM/psm/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/PSM/psm/</guid>
+      <description>Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.
+Variables consideration for propensity score model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome).</description>
+    </item>
+    
+    <item>
+      <title>Collinearity (SAS)</title>
+      <link>/post/collinearity/collinearity/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/collinearity/collinearity/</guid>
+      <description>Collinearity occurs when two variables are highly correlated with each other. Collinearity may cause inflation in standard errors for the given risk factors. However, this is not an issue for prediction purpose. If the collinearity doesn’t involve the risk factors of interest, it’s not a big issue to include the collinear variables for risk adjustment.
+To check for collinearity, SAS PROC Reg has a convenient option. But SAS logistic or COX do not have corresponding option to check collinearity issues.</description>
+    </item>
+    
+    <item>
+      <title>longitudinal plot (SAS)</title>
+      <link>/post/longitudinal-plot/longitudinal-plot/</link>
+      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/longitudinal-plot/longitudinal-plot/</guid>
+      <description>About the data example: The aortic root sizes were measured over time for two groups of patients. The change of root size over time is of interest. In this analysis, we first plotted the group mean at each discrete time to visualize the root growth, secondly modeled the continuous time effect of root growth. The data is setup in a long format that each subject with ID (sBAV_ID_Number) has multiple rows with multiple measurements at different times.</description>
+    </item>
+    
+    <item>
+      <title>Odds Ratio Forest Plot (R)</title>
       <link>/post/odds-ratio-forest-plot/odds-ratio-forest-plot/</link>
       <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
       
       <guid>/post/odds-ratio-forest-plot/odds-ratio-forest-plot/</guid>
-      <description>Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,A change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.1 and 0.5 respectively. An odds ratio between 0-1 indicates a decrease of odds, while an odds ratio greater than 1 indicates an increase in odds.</description>
+      <description>Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,a change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.1 and 0.5 respectively. An odds ratio between 0-1 indicates a decrease of odds, while an odds ratio greater than 1 indicates an increase in odds.</description>
     </item>
     
     <item>
-      <title>Use simulation to calculate power in linear regression model</title>
+      <title>Use simulation to calculate power in linear regression model (R)</title>
       <link>/post/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</link>
       <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
       
@@ -41,28 +79,7 @@ A couple of problems have occured and I have searched very hard to resolve them.
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie .</description>
-    </item>
-    
-    <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
-    </item>
-    
-    <item>
-      <title>Propensity score methods-I PS Matching</title>
-      <link>/post/PSM/psm/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/post/PSM/psm/</guid>
-      <description>Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.
-Variables considering in the model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome).</description>
+      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
     </item>
     
   </channel>
