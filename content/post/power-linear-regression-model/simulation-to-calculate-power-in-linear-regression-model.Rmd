@@ -5,7 +5,7 @@ author: Ting Wu
 date: '2021-02-10'
 ---
 
-Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest.  what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the "estimated" effect size. Be cautious to not to calculate post hoc power, it's not meaningful to calculate statistical powers for an effect with a known p value. 
+Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest.  what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the "estimated" effect size. Be cautious not to calculate post hoc power, it's not meaningful to calculate statistical powers for an effect with a known p value. 
 
 ```{r, out.width = "400px", eval=FALSE}
 
