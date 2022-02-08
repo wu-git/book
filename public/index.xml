@@ -5,7 +5,16 @@
     <link>/</link>
     <description>Recent content on Codes</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 10 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sankey diagram (R)</title>
+      <link>/post/sankey/sankey-020722/</link>
+      <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/post/sankey/sankey-020722/</guid>
+      <description>A Sankey Diagram is a popular data visualization for data flows display. For example, hospitals from better, average, worse performance categories can fall into different performance categories after quality improvement efforts. A Sankey diagram can be used to display such a change in categories. The categorical buckets (nodes) are represented by boxes or text at each column in the plot. The transition across nodes are connected by links. These links have a width proportional to the weight of the flow, which could be percentage the or number of subjects.</description>
+    </item>
+    
     <item>
       <title>Mixed effect model simulation and ICC (R)</title>
       <link>/post/mixed-effect-model-icc/mixed-effect-and-ICC81121/</link>

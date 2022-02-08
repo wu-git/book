@@ -42,11 +42,11 @@
 </ol>
 <p>3.1 After you obtain a matched sample and verify the balancing of the two treatment groups of interest, you may proceed to outcome analysis using the matched data. Some suggest that conditional logistic model or paired t-tests may be needed to account for the matching pairs, while others suggest conditional on pairs is not necessary for the outcome analysis given the matched sample mimics randomized trial data. In a daily analysis, usual regression model or tests can be performed without accounting for the matching pairs.</p>
 <p>3.2 one to various ratio matching</p>
-<p>When one control is matched to many treatments, and the ratio is not constant, for example, 1:2, 1:1, 1:4 were all possible matching ratio. The outcome analysis tests need to be weighted by the number of controls. For example, if one treatment is matched to 4 controls, each control should be weighted as 1/4. The analysis codes are often needed a weight statement as shown below in 4.1 code example.</p>
+<p>When one control is matched to many treatments, and the ratio is not constant, for example, 1:2, 1:1, 1:4 were all possible matching ratio. The outcome analysis tests need to be weighted by the number of controls. For example, if one treatment is matched to 4 controls, each control should be weighted as 1/4. The analysis codes are often needed an observation weight statement as shown below in 4.1 code example.</p>
 <ol start="4" style="list-style-type: decimal">
 <li>Implementation</li>
 </ol>
-<p>4.1 A Sas procedure: SAS psmatch procedure provides convienient implementation for these PS methods, the output also quantifies the standardized difference. Here is an code example.</p>
+<p>4.1 A Sas procedure: SAS psmatch procedure provides convienient implementation for these PS methods, the output also quantifies the standardized difference. Here is an code example for one to many matching.</p>
 <pre class="r"><code>/* propensity score model for group as the treatment, matching variables: age, gender, COPD and acute stroke */
 
 proc psmatch data=aortic;
@@ -56,6 +56,10 @@ match  method=varratio(kmin=1 kmax=3)   caliper=0.5;
 assess lps var=(age_at_operation  gender_ COPD AcuteStroke ) / plots=StdDiff;
 output out(obs=match)=Matched1N1k   ATTWGT=attwgt matchid=mid;
 run;
+
+* note that _MATCHWGT_ indicates the weighting based on the matching ratio;
+* attwgt indicates the weights based on propensity score to calculate average treatment effect on the treated (ATT), atewgt indicates the weights to calculate average treatment effect (ATE). 
+* for IPTW to assess the balance of the weighted sample, in the assess statement , WEIGHT= ATTWGT or ATEWGT could be used to diagnosis the balance. 
 
 *outcome analysis; 
 proc freq data=Matched1N1k;
