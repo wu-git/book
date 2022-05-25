@@ -22,7 +22,17 @@ Solution: download update R version from (https://www.rstudio.com/products/rstud
 
 Solution: It seems there are several ways to push local files to github. In R I follow the path ``Tools > Version Control > git``.  Then I select the folders that I would like to upload to github. However, some of the folders were NOT staged. In another word, I could not select these Not staged files in order to commit and push them to github.
 
-To go around this, I used terminal. In terminal, I used `` cd `` to go to the local github clone file. Then I  used command `` git add -A `` .  All files in the folders were able to upload to github then. 
+To go around this, I used terminal. In terminal, I used `` cd `` to go to the local github clone file. Then I  used the following command 
+
+```{r, out.width = "400px", eval=FALSE}
+    git add . 
+    git commit -m "$m"
+    git push -u origin master    
+```
+
+During the process, the terminal will ask you the user name and password for git. The psw will be the personal token obtained from the developer setting in the git website. Make sure select the permissions when you generate the token.  
+
+All files in the folders then would be able to upload to github . 
 
 * 3. I could not publish my sites in netlify. 
 

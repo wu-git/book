@@ -20,7 +20,7 @@ A couple of problems have occured and I have searched very hard to resolve them.
 <link rel="icon" href="/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/book.min.da110f27d6a4d632dc8e162876b7216c5c1f82164fbdac7ff33021633767f034.css" >
   <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/en.search.min.0d4159201462ccf92abfecab716bb0b3f388f34ab98c42d1942d3f22019fefd8.js" ></script>
+  <script defer src="/en.search.min.749d7c271df6abe70b0289b06850f266513170445f852261eec0da3a0ae8a711.js" ></script>
 
   <script defer src="/sw.min.74a8bb07f0bee86d6bb9a2750f073f14d93c7e4512f28860370cfd879e9719b4.js" ></script>
 
@@ -330,7 +330,12 @@ https://github.com/alex-shpak/hugo-book
 </li>
 </ul>
 <p>Solution: It seems there are several ways to push local files to github. In R I follow the path <code>Tools &gt; Version Control &gt; git</code>.  Then I select the folders that I would like to upload to github. However, some of the folders were NOT staged. In another word, I could not select these Not staged files in order to commit and push them to github.</p>
-<p>To go around this, I used terminal. In terminal, I used <code>cd</code> to go to the local github clone file. Then I  used command <code>git add -A</code> .  All files in the folders were able to upload to github then.</p>
+<p>To go around this, I used terminal. In terminal, I used <code>cd</code> to go to the local github clone file. Then I  used the following command</p>
+<pre><code class="language-{r," data-lang="{r,">    git add . 
+    git commit -m &quot;$m&quot;
+    git push -u origin master    
+</code></pre><p>During the process, the terminal will ask you the user name and password for git. The psw will be the personal token obtained from the developer setting in the git website. Make sure select the permissions when you generate the token.</p>
+<p>All files in the folders then would be able to upload to github .</p>
 <ul>
 <li>
 <ol start="3">
