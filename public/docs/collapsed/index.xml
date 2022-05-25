@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Codes</title>
+    <link>/docs/collapsed/</link>
+    <description>Recent content on Codes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 10 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/docs/collapsed/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Propensity score methods-I PS Matching (SAS)</title>
+      <link>/docs/collapsed/psm/psm/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/collapsed/psm/psm/</guid>
+      <description>Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.
+Variables consideration for propensity score model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome).</description>
+    </item>
+    
+    <item>
+      <title>Propensity score weighting methods (R)</title>
+      <link>/docs/collapsed/ps-weighting/ps-weighting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/collapsed/ps-weighting/ps-weighting/</guid>
+      <description>Propensity score (PS) weighting methods include inverse probability treatment weighting (IPTW). , matching weighting, overlap weighting. These methods all used propensity score to weight the observations, resulting in a “pseudo” balancing sample. Inverse probability weighting is a common approach, however, often come with a problem with extreme weights. In the case of extreme weights, some cases may be weighted much larger than the other cases, thus skew the effect. To deal with extreme weight, one may suggest truncating the weight.</description>
+    </item>
+    
+  </channel>
+</rss>

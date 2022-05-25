@@ -1,0 +1,91 @@
+---
+title: "Mixed effect model simulation and ICC (R)"
+output: html_document
+author: Ting Wu
+date: '2021-08-10'
+---
+
+
+
+<div id="mixed-effect-model-simulation-and-icc" class="section level3">
+<h3>Mixed effect model simulation and ICC</h3>
+<p>Data example: Mixed effect model was simulated using parameters obtained from a pilot data. Intraclass correlation coefficient was calculated from the mixed effect model to test the agreement between raters. In this example, videos as the subjects were assessed by different raters, each rater will be assigned to multiple videos. nstand is parameter for the number of videos which will be assessed by various raters (nraters). Given the variation of the rating can be attributed to videos and raters. The mixed effect model in this simulation included videos and raters as two separate random intercepts. Intraclass correlation is calculated from the models with the simulated data. We varied the number of videos in the simulation. The ICC distribution plot from the simulated data showed that 60 videos has reached a more accurate estimate for ICC with the narrower range.</p>
+<div class="figure">
+<img src="/docs//mixed-effect-model-icc/iccplot.jpeg" />
+
+</div>
+<pre class="r"><code>video_fun = function( nstand = 30 ,# number of videos to rate
+                      nraters = (nstand/10)*3,  #each rater rated 10 subjects (i.e.videos), and each subject is rated by 3 different raters.
+                      #nraters = (nstand/4)*3  #each rater rated 4 subjects, and each subject is rated by 3 different raters.
+                      nraterper=3 ,# the number of raters for each video; 
+                      mu = 20.2,
+                      sds =9.9,  # video random effect
+                      sd =3.2 , # residual
+                      rsd=3.6,  # rater random effect
+                      nstandper=10
+)
+  
+{
+  #set.seed(201)
+  rater_sample = sample(1:50, nraters, replace=F)
+  rater = rep(rater_sample, each=10)  # each rater repeats 10 times, since each rater reviews 10subjects; 
+  ratereff = rnorm(nraters, 0, rsd)  # rsd the rater random effect; each rater has an random intercept
+  ratereff = rep(ratereff,each=10)
+  
+  #set.seed(1917)
+  x = sample(1:nstand,nstand)
+  subject_assingment = c(x, c(x[nstand], x[-nstand]),  c(x[(nstand - 1):nstand], x[1:(nstand - 2)]))
+  
+  
+  standeff = rnorm(nstand, 0, sds)    
+  standeff =c(standeff, c(standeff[nstand], standeff[-nstand]),  c(standeff[(nstand - 1):nstand], standeff[1:(nstand - 2)]))  # sds the video random effect ; each video has an random intercept  
+  
+  
+  ploteff = rnorm(nstand*nraterper, 0, sd)  # sd the overall residual effect 
+  
+  dat2 = data.frame(rater,ratereff,subject_assingment,standeff,ploteff)
+  
+  dat2$resp = with(dat2, mu + standeff +ratereff+ploteff )
+  
+  dat2$rater &lt;-as.factor(dat2$rater)
+  dat2$subject_assingment = as.factor(dat2$subject_assingment)
+  
+  fit1= lmer(resp ~  1+(1|rater)+(1|subject_assingment), data = dat2, control=lmerControl(optimizer=&quot;bobyqa&quot;,  optCtrl=list(maxfun=2e5)))
+  vcv_= as.data.frame(t((as.data.frame (VarCorr (fit1))[c(&#39;grp&#39;,&quot;vcov&quot;)]) [,-1]) )    # exact the variation, transpose the group variable and variance columns. 
+  vcv &lt;- as.data.frame (VarCorr (fit1)) 
+  names(vcv_) &lt;- vcv[,1]    # assign names for the variance in vcv_ data
+  icc=vcv_$subject_assingment  / (vcv_$subject_assingment+vcv_$rater +vcv_$Residual)  
+  # calculate the ICC, which the the variance from the subjects (videos) divided by the total variances. 
+} 
+
+
+
+library (dplyr)
+library (lme4)
+
+# call the function to calculate the ICC; 
+sims = replicate(100, video_fun(), simplify = FALSE )
+
+library(purrr) # v. 0.3.3
+suppressPackageStartupMessages( library(dplyr) ) # v. 0.8.3
+library(ggplot2) # v. 3.2.1
+
+stand_sims = c(30,60) %&gt;%
+  set_names() %&gt;%
+  map(~replicate(100, video_fun(nstand = .x) ) )    # repeat the function for 100 times with different nstand (# of videos)
+
+# convert the list to dataframe
+df3=as.data.frame(do.call(cbind, stand_sims))
+summary (df3$`30`)  # summarize the ICC ranges by samples size
+
+library (reshape2)
+# reshape the dataframe
+df3 &lt;- melt(df3)
+
+# plot the distribution by various number of videos
+# ICC=0.81 is the ICC from pilot data and used as the reference here. 
+ggplot(df3, aes(x = value) ) +xlim(0.1,1.0)+
+  geom_density(fill = &quot;blue&quot;, alpha = .25) +
+  facet_wrap(~variable) +
+  geom_vline(xintercept = 0.81)</code></pre>
+</div>

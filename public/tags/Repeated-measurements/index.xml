@@ -1,27 +1,46 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Repeated measurements on Codes</title>
-    <link>/tags/Repeated-measurements/</link>
-    <description>Recent content in Repeated measurements on Codes</description>
+    <title>Repeated measurements on Code Notes</title>
+    <link>/tags/repeated-measurements/</link>
+    <description>Recent content in Repeated measurements on Code Notes</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/Repeated-measurements/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/repeated-measurements/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Collinearity (SAS)</title>
-      <link>/post/collinearity/collinearity/</link>
+      <link>/docs/collinearity/collinearity/</link>
       <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/collinearity/collinearity/</guid>
+      <guid>/docs/collinearity/collinearity/</guid>
+      <description>Collinearity Collinearity occurs when two variables are highly correlated with each other. Collinearity may cause inflation in standard errors for the given risk factors. However, this is not an issue for prediction purpose. If the collinearity doesn’t involve the risk factors of interest, it’s not a big issue to include the collinear variables for risk adjustment.
+To check for collinearity, SAS PROC Reg has a convenient option. But SAS logistic or COX do not have corresponding option to check collinearity issues.</description>
+    </item>
+    
+    <item>
+      <title>Collinearity (SAS)</title>
+      <link>/posts/collinearity/collinearity/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/collinearity/collinearity/</guid>
       <description>Collinearity occurs when two variables are highly correlated with each other. Collinearity may cause inflation in standard errors for the given risk factors. However, this is not an issue for prediction purpose. If the collinearity doesn’t involve the risk factors of interest, it’s not a big issue to include the collinear variables for risk adjustment.
 To check for collinearity, SAS PROC Reg has a convenient option. But SAS logistic or COX do not have corresponding option to check collinearity issues.</description>
     </item>
     
     <item>
-      <title>longitudinal plot (SAS)</title>
-      <link>/post/longitudinal-plot/longitudinal-plot/</link>
+      <title>Longitudinal plot (SAS)</title>
+      <link>/docs/longitudinal-plot/longitudinal-plot/</link>
       <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/longitudinal-plot/longitudinal-plot/</guid>
+      <guid>/docs/longitudinal-plot/longitudinal-plot/</guid>
+      <description>Longitudinal plot About the data example: The aortic root sizes were measured over time for two groups of patients. The change of root size over time is of interest. In this analysis, we first plotted the group mean at each discrete time to visualize the root growth, secondly modeled the continuous time effect of root growth. The data is setup in a long format that each subject with ID (sBAV_ID_Number) has multiple rows with multiple measurements at different times.</description>
+    </item>
+    
+    <item>
+      <title>longitudinal plot (SAS)</title>
+      <link>/posts/longitudinal-plot/longitudinal-plot/</link>
+      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/longitudinal-plot/longitudinal-plot/</guid>
       <description>About the data example: The aortic root sizes were measured over time for two groups of patients. The change of root size over time is of interest. In this analysis, we first plotted the group mean at each discrete time to visualize the root growth, secondly modeled the continuous time effect of root growth. The data is setup in a long format that each subject with ID (sBAV_ID_Number) has multiple rows with multiple measurements at different times.</description>
     </item>
     

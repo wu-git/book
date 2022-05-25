@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Code Notes</title>
+    <link>/posts/</link>
+    <description>Recent content in Posts on Code Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 07 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sankey diagram (R)</title>
+      <link>/posts/plot/sankey/sankey-020722/</link>
+      <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/plot/sankey/sankey-020722/</guid>
+      <description>A Sankey Diagram is a popular data visualization for data flows display. For example, hospitals from better, average, worse performance categories can fall into different performance categories after quality improvement efforts. A Sankey diagram can be used to display such a change in categories. The categorical buckets (nodes) are represented by boxes or text at each column in the plot. The transition across nodes are connected by links. These links have a width proportional to the weight of the flow, which could be percentage the or number of subjects.</description>
+    </item>
+    
+    <item>
+      <title>Mixed effect model simulation and ICC (R)</title>
+      <link>/posts/mixed-effect-model-icc/mixed-effect-and-icc81121/</link>
+      <pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/mixed-effect-model-icc/mixed-effect-and-icc81121/</guid>
+      <description>Data example: Mixed effect model was simulated using parameters obtained from a pilot data. Intraclass correlation coefficient was calculated from the mixed effect model to test the agreement between raters. In this example, videos as the subjects were assessed by different raters, each rater will be assigned to multiple videos. nstand is parameter for the number of videos which will be assessed by various raters (nraters). Given the variation of the rating can be attributed to videos and raters.</description>
+    </item>
+    
+    <item>
+      <title>Propensity score methods-I PS Matching (SAS)</title>
+      <link>/posts/psm/psm/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/psm/psm/</guid>
+      <description>Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.
+Variables consideration for propensity score model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome).</description>
+    </item>
+    
+    <item>
+      <title>Collinearity (SAS)</title>
+      <link>/posts/collinearity/collinearity/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/collinearity/collinearity/</guid>
+      <description>Collinearity occurs when two variables are highly correlated with each other. Collinearity may cause inflation in standard errors for the given risk factors. However, this is not an issue for prediction purpose. If the collinearity doesn’t involve the risk factors of interest, it’s not a big issue to include the collinear variables for risk adjustment.
+To check for collinearity, SAS PROC Reg has a convenient option. But SAS logistic or COX do not have corresponding option to check collinearity issues.</description>
+    </item>
+    
+    <item>
+      <title>longitudinal plot (SAS)</title>
+      <link>/posts/longitudinal-plot/longitudinal-plot/</link>
+      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/longitudinal-plot/longitudinal-plot/</guid>
+      <description>About the data example: The aortic root sizes were measured over time for two groups of patients. The change of root size over time is of interest. In this analysis, we first plotted the group mean at each discrete time to visualize the root growth, secondly modeled the continuous time effect of root growth. The data is setup in a long format that each subject with ID (sBAV_ID_Number) has multiple rows with multiple measurements at different times.</description>
+    </item>
+    
+    <item>
+      <title>Odds Ratio Forest Plot (R)</title>
+      <link>/posts/odds-ratio-forest-plot/odds-ratio-forest-plot/</link>
+      <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/odds-ratio-forest-plot/odds-ratio-forest-plot/</guid>
+      <description>Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,a change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.1 and 0.5 respectively. An odds ratio between 0-1 indicates a decrease of odds, while an odds ratio greater than 1 indicates an increase in odds.</description>
+    </item>
+    
+    <item>
+      <title>Use simulation to calculate power in linear regression model (R)</title>
+      <link>/posts/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</link>
+      <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</guid>
+      <description>Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size.</description>
+    </item>
+    
+    <item>
+      <title>Using R Blogdown for Site Building</title>
+      <link>/posts/blog-down/blog-down/</link>
+      <pubDate>Thu, 08 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/blog-down/blog-down/</guid>
+      <description>It&amp;rsquo;s such a learning experience in setting up a website using github+ terminal + R blogdown + netlify for me. In general, I followed the post from [Alison Hill] (https://alison.rbind.io/post/up-and-running-with-blogdown/).
+A couple of problems have occured and I have searched very hard to resolve them.
+   R crash whenever I tried to open projects in Mac OS system.    Solution: download update R version from (https://www.rstudio.com/products/rstudio/download/). Now I have Rstudio 1.</description>
+    </item>
+    
+  </channel>
+</rss>

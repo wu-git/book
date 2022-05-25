@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="Use simulation to calculate power in linear regression model (R)" />
+<meta property="og:description" content="Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/" />
+<meta property="article:published_time" content="2021-02-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-10T00:00:00+00:00" />
+<title>Use simulation to calculate power in linear regression model (R) | Code Notes</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.da110f27d6a4d632dc8e162876b7216c5c1f82164fbdac7ff33021633767f034.css" >
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/en.search.min.0d4159201462ccf92abfecab716bb0b3f388f34ab98c42d1942d3f22019fefd8.js" ></script>
+
+  <script defer src="/sw.min.74a8bb07f0bee86d6bb9a2750f073f14d93c7e4512f28860370cfd879e9719b4.js" ></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-XXXXXXXXX-X', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Code Notes</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/blog-down/blog-down/" class="">Using R Blogdown for Site Building</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-31f51f1e983d3fcd191b1a670dd370c1" class="toggle"  />
+    <label for="section-31f51f1e983d3fcd191b1a670dd370c1" class="flex justify-between">
+      <a href="/docs/plot/" class="">Plot</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/plot/sankey/sankey-020722/" class="">Sankey diagram (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/plot/odds-ratio-forest-plot/odds-ratio-forest-plot/" class="">Odds Ratio Forest Plot (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0a41e1f9be9b219b00fc23f1b7c32d3f" class="toggle"  />
+    <label for="section-0a41e1f9be9b219b00fc23f1b7c32d3f" class="flex justify-between">
+      <a href="/docs/psm/" class="">Propensity score methods</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/psm/psm/psm/" class="">Propensity score methods-I PS Matching (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/psm/ps-weighting/ps-weighting/" class="">Propensity score weighting methods (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mixed-effect-model-icc/mixed-effect-and-icc81121/" class="">Mixed effect model simulation and ICC (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/collinearity/collinearity/" class="">Collinearity (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/longitudinal-plot/longitudinal-plot/" class="">Longitudinal plot (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/" class="">Use simulation to calculate power in linear regression model (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Use simulation to calculate power in linear regression model (R)</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/">Use simulation to calculate power in linear regression model (R)</a>
+  </h1>
+  
+  <h5>Feb 10, 2021</h5>
+
+
+
+  
+
+  
+
+
+
+
+
+
+<p>Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size. Be cautious not to calculate post hoc power, it’s not meaningful to calculate statistical powers for an effect with a known p value.</p>
+<pre class="r"><code>#### use similation to calculate the power in linear regression model###############
+
+library(&#39;plyr&#39;)
+library(&#39;ggplot2&#39;)
+
+# the simulation function; 
+regression_sim &lt;- function(simNum, n, b0, b1, b2, b3,b4,b5, b6, b7, b8,b9,b10, err_mean=0, err_sd=74.45294) {
+  
+  # simulate the dummy variables for hospital admission acuity: status1=elective, status2=urgent; status3=emergent; 
+  status1 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.27, 0.73) )
+  status2 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.95, 0.05) )
+  status3 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.79, 0.21) )
+  
+  # simulate the dummy variables for euroscore risk score strata
+  euroscore3c1 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.67, 0.33) )
+  euroscore3c2 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.67, 0.33) )
+  euroscore3c3 &lt;- sample( 0:1, n, replace=TRUE, prob=c(0.67, 0.33) )
+  
+  # simulate the continous variable team familiairty with estimated mean and std; 
+  fourfam &lt;- rnorm(n, mean=23.8, sd=12.1)
+  
+  # the model
+  # generate the outcome y based on the equation; 
+  y &lt;- b0 + (b1 * fourfam) + (b2 * status1)+(b3 * status2)+(b4* status3)+
+    (b5 * euroscore3c1)+(b6 * euroscore3c2)+(b7* euroscore3c3)+
+    (b8 *fourfam* euroscore3c1)+b9 *fourfam* euroscore3c2+b10 *fourfam* euroscore3c3+
+    +rnorm(n, mean=err_mean, sd=err_sd)
+  
+  # fun the model with simulation data; 
+  model &lt;- lm(y ~ fourfam +status1+status2+status3+euroscore3c1+euroscore3c2+euroscore3c3+
+                fourfam* euroscore3c1+fourfam* euroscore3c2+fourfam* euroscore3c3)
+  
+  
+  output &lt;- summary(model)$coefficients
+  
+  # identify the coefficients for the interaction terms; 
+  # look at the power of detecting team familiarity effect on euroscore strata 1, which will be the sum of 
+  #the coefficients of team familairty and the interaction term for team familiarity and euroscore strata 1.
+  # use the delta methods to calculate the variance
+  variance=vcov(model)[2,2]+vcov(model)[9,9]+2*vcov(model)[2,9]
+  
+  # build the wald test; 
+  stat=  (output[2, 1]+output[9, 1]-0 )/sqrt(variance)
+  
+  # obtain p value;
+  p_values&lt;- 2*pnorm(-abs(stat))
+  
+  
+  return(p_values)
+}
+
+regression_sim
+
+num_sims &lt;- 1000
+
+# repeat the function for 1000 simulation for sample size=1000; 
+# the values for coefficients: b0-b10, the mean and std errors are obtained based on a pilot study on existing data.
+# to obtain a certain effect, one may vary the effect by increasing or decreasing 5% of the estimated effect. 
+sims &lt;- ldply(1:num_sims, regression_sim,  n=1000, b0=226.0049100, b1=-2.5294683, b2=0.0000000, b3=-2.5636306,
+              b4=36.0413179,b5=-78.3913251, b6=-42.9765322, b7=0.0000000,
+              b8=1.5820389, b9=1.2321387, b10=0.0000000, err_mean=0, err_sd=74.45294)
+
+# calculate the power. The probability of rejecting the null hypothesis given the alternative hypothesis is true
+power &lt;- sum(sims &lt; .05) / nrow(sims)
+
+
+# calculate power for various sample sizes; 
+sample_sizes &lt;- c(1000,2000, 3000, 4000, 5000)
+results &lt;- NULL
+for (val in sample_sizes) {
+  sims &lt;- ldply(1:100, regression_sim, n=val, b0=226.0049100, b1=-2.5294683, b2=0.0000000, b3=-2.5636306,
+                b4=36.0413179,b5=-78.3913251, b6=-42.9765322, b7=0.0000000,
+                b8=1.5820389, b9=1.2321387, b10=0.0000000, err_mean=0, err_sd=74.45294)
+  sims$n &lt;- val  # add the sample size in as a separate column to our results
+  results &lt;- rbind(results, sims)
+}
+
+
+# conflict between plyr and dplyr. detach plyr, and use library dplyr
+
+detach(&quot;package:plyr&quot;, unload=TRUE)
+library(&#39;dplyr&#39;)
+
+# summary the power for various sample size; 
+power_ests &lt;- results %&gt;%
+  group_by(n) %&gt;% summarize(power=sum(V1 &lt; .05) /length(n))
+
+# plot the power with different sample size;
+ggplot(power_ests, aes(x=n, y=power)) +
+  geom_point() +
+  geom_line() +
+  ylim(c(0, 1)) +
+  theme_minimal()</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function select(element){const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(element);selection.removeAllRanges();selection.addRange(range);}
+document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(event){select(code.parentElement);if(navigator.clipboard){navigator.clipboard.writeText(code.parentElement.textContent);}});});})();</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "my-site" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

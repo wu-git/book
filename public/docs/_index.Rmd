@@ -1,0 +1,6 @@
+---
+title: Introduction
+type: docs
+---
+
+Here is a place to store codes and notes for analytic projects. 

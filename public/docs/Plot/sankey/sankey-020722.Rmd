@@ -1,0 +1,89 @@
+---
+title: "Sankey diagram (R)"
+output: html_document
+author: Ting Wu
+date: '2022-02-07'
+---
+
+###Sankey diagram
+
+A Sankey Diagram is a popular data visualization for  data flows display. For example, hospitals from better, average, worse performance categories can fall into different performance categories after quality improvement efforts. A Sankey diagram can be used to display such a change in categories.  The categorical buckets  (nodes) are represented by boxes or text at each column in the plot. The transition across nodes are connected by links. These links have a width proportional to the weight of the flow, which could be percentage the or number of subjects. 
+
+The R package (networkD3) can be used to create a sankey diagram. The key is to construct two dataset: 1) nodes: coding each bucket at different column in a sequential order,  a group variable can be added; 2) links: the connections across different nodes. A detailed reference and examples for the R package can be reviewed here: https://www.data-to-viz.com/graph/sankey.html
+
+
+A data example: The goal of the following codes are to describe the change of locations after a left ventricular assist device (LVAD) implant (day 0) at day 90, 180 and 365. These possible locations such as home, SNF, hospitals, death, etc are coded as 1 to 9.  Given the sensitivity of the data, the following codes may not be comprehensible without the data context. 
+
+```{r, out.width = "400px", eval=FALSE}
+
+#the nodes data can be managed manually, the key is that the first entry would be recognized as 0 in the sankey diagram function, thus the coding order has to be started with 0; 
+nodes<- read.csv (".../nodes2.csv")
+
+
+dat<- read.csv ("../final_location_4dates_w.csv")
+
+library(tidyverse)
+
+dat$cat_location_d0_re=0
+dat$cat_location_d90 [is.na(dat$cat_location_d90)]=9  # coding the NA subject as censor; 
+dat$cat_location_d180 [is.na(dat$cat_location_d180)]=9  # coding the NA subject as censor; 
+dat$cat_location_d365 [is.na(dat$cat_location_d365)]=9  # coding the NA subject as censor; 
+
+# recode the locations at day 180 and day 365 to the sequential coding (day 90 is already set); 
+dat11<- dat %>% mutate(cat_location_d180_re = recode(cat_location_d180, "1"="10","2"="11", "3"="12","4"="13","5"="14", "6"="15", "7"="16","8"="17", "9"="18"))
+dat12 <- dat11 %>% mutate(cat_location_d365_re = recode(cat_location_d365, "1"="19","2"="20", "3"="21","4"="22","5"="23", "6"="24", "7"="25","8"="26", "9"="27"))
+
+
+# count the weight of each transition from day 0 (d0) to day 90 (d90); 
+
+dat1<- data.frame(dplyr::count_(dat12, vars = c('cat_location_d0_re','cat_location_d90')))
+
+# rename the variables; 
+dat1 <- dat1 %>%
+  rename(source=cat_location_d0_re,
+         target=cat_location_d90 ,
+          weight=n)
+
+# count the weight of each transition from day 90 to day 180; 
+dat2<- data.frame(dplyr::count_(dat12, vars = c('cat_location_d90','cat_location_d180_re')))
+
+dat2 <- dat2 %>%
+  rename(source=cat_location_d90,
+         target=cat_location_d180_re ,
+         weight=n)
+
+# count the weight of each transition from day 180 to day 365; 
+
+dat3<- data.frame(dplyr::count_(dat12, vars = c('cat_location_d180_re','cat_location_d365_re')))
+
+dat3 <- dat3 %>%
+  rename(source=cat_location_d180_re,
+         target=cat_location_d365_re ,
+         weight=n)
+
+# combine the data above into one links data; 
+links2 <-data.frame (rbind(dat1, dat2, dat3))
+
+# prepare the variables for sankeynetwork function; 
+links2$source= as.numeric(links2$source)
+links2$target= as.numeric(links2$target)
+
+nodes$group <- as.factor(nodes$group )
+
+# Give a color for each group:
+my_color <- 'd3.scaleOrdinal() .domain(["a", "b", "c","d","e","f","g","h","i","j"]) .range(["#69b3a2", "steelblue", "grey","green","pink","brown","blue","orange","red","yellow"])'
+
+# make the sankey diagram; 
+
+p <- sankeyNetwork(Links = links2, Nodes = nodes,
+                   Source = "source", Target = "target",
+                   Value = "weight", NodeID = "name", 
+                   fontSize = 11, nodeWidth =20,
+                   colourScale=my_color,NodeGroup="group",
+                   sinksRight=FALSE)
+p
+
+```
+
+
+

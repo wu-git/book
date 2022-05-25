@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Codes</title>
+    <title>Tags on Code Notes</title>
     <link>/tags/</link>
-    <description>Recent content in Tags on Codes</description>
+    <description>Recent content in Tags on Code Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 12 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Repeated measurements</title>
-      <link>/tags/Repeated-measurements/</link>
+      <link>/tags/repeated-measurements/</link>
       <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/Repeated-measurements/</guid>
+      <guid>/tags/repeated-measurements/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R blogdown</title>
-      <link>/tags/R-blogdown/</link>
+      <link>/tags/r-blogdown/</link>
       <pubDate>Thu, 08 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/R-blogdown/</guid>
+      <guid>/tags/r-blogdown/</guid>
       <description></description>
     </item>
     

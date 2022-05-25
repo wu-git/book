@@ -1,0 +1,89 @@
+---
+title: "Longitudinal plot (SAS)"
+output: html_document
+author: Ting Wu
+date: '2021-03-12'
+categories:
+  - SAS
+tags:
+  - Repeated measurements
+
+---
+
+
+
+<div id="longitudinal-plot" class="section level3">
+<h3>Longitudinal plot</h3>
+<p>About the data example: The aortic root sizes were measured over time for two groups of patients. The change of root size over time is of interest. In this analysis, we first plotted the group mean at each discrete time to visualize the root growth, secondly modeled the continuous time effect of root growth. The data is setup in a long format that each subject with ID (sBAV_ID_Number) has multiple rows with multiple measurements at different times.</p>
+<ol style="list-style-type: decimal">
+<li>To generate longitudinal plots:</li>
+</ol>
+<pre class="r"><code>*plot the group mean over time with formatting; 
+
+goptions reset=all ftext=swiss ;
+axis1 label=(h=2 a=90 &quot;Root size (mm)&quot;) value=( h=2 );
+axis2 label= (h=2 &quot;Time (year)&quot;) value=( h=2 );
+legend1 label=(f=swiss h=2  &#39;Root Group&#39;)  value=(h=2 color=black  &#39;root control&#39; &#39;root dilation&#39; ) ;
+
+* time2 is a decrete time variable in the dataset; 
+proc sort data=rootdat out=rootdat_t nodupkey; by sBAV_ID_Number time2;run;  
+
+proc gplot data=rootdat_t;
+plot root_size*time2=Root_group / haxis=axis2 vaxis=axis1 legend = legend1 ;
+symbol1 c=red i= std1mjt  l=1 w=2 mode=include r=1;
+symbol2 c=blue i= std1mjt  l=2  w=2 mode=include r=1;
+title h=3 &quot;Average root size by group with standard errors of means&quot;;
+run;
+quit;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Output the plot</li>
+</ol>
+<pre class="r"><code>ods graphics on / reset=all imagefmt=tiff imagename=&quot;KM_Stented_vs_Stentless&quot;;
+ods listing style=Statistical gpath=&quot;C:\xx&quot;;
+ods graphics on / width=5in;
+ods listing image_dpi=500;run;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>To model the change of aorta root over time, time is modeled as a continuous variable in the model. The Class variable time is used in the repeated statement with compound symmetry as the covariance matrix to account for residual correlation within a subject. Mixed effect model is preferred when the longitudinal data is unbalanced. Repeated ANOVA is only used for balanced data. The interaction between group effect and time is tested first, if not significant, will be removed from the model.</li>
+</ol>
+<pre class="r"><code>**model; 
+*timcl2 is class variable that is placed at the repeated statement to account for patient level (sBAV_ID) cluster; 
+* time is modeled as a countinous variable. 
+
+proc sort data=rootdat; by sBAV_ID_Number timecl;run;
+data rootdat; set rootdat;  timecl2=time;run;
+
+Proc mixed data=rootdat method=ml covtest empirical;
+class sBAV_ID_Number  Root_group (ref=&#39;0&#39;) timecl2;
+model root_size = time Root_group time*Root_group/ solution;
+repeated timecl2 / type =CS subject = sBAV_ID_Number;
+run;
+
+******if the interaction is not significant****;
+
+Proc mixed data=rootdat method=ml covtest empirical;
+class sBAV_ID_Number  Root_group (ref=&#39;0&#39;) timecl2;
+model root_size = time Root_group / solution;
+repeated timecl2 / type =CS subject = sBAV_ID_Number;
+run;
+
+
+******if there were an interaction****;
+Proc mixed data=rootdat_t method=ml covtest empirical;
+class sBAV_ID_Number  Root_group (ref=&#39;0&#39;) timecl ;
+model root_size = time2 Root_group time2*Root_group / solution;
+repeated  timecl/ type =CS subject = sBAV_ID_Number;
+estimate &quot;root group_diff at 5 y&quot;  Root_group 1 -1
+                             time2*Root_group   5 -5;
+
+estimate &quot;root group_diff at 10 y&quot;  Root_group 1 -1
+                            time2*Root_group   10 -10;
+
+estimate &quot;root group_diff at 15 y&quot;  Root_group 1 -1
+                             time2*Root_group   15 -15;
+
+estimate &quot;time effect for group 1&quot; time2 1 0
+                                   time2*Root_group   1 0;
+estimate &quot;time effect for group 0&quot; time2 1 0
+                                   time2*Root_group   0 1;
+run;</code></pre>
+</div>

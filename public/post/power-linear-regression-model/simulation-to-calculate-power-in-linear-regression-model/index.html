@@ -1,30 +1,122 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Use simulation to calculate power in linear regression model (R) | Codes</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/fonts.css" />
-    
-  </head>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="Use simulation to calculate power in linear regression model (R)" />
+<meta property="og:description" content="Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/" />
+<meta property="article:published_time" content="2021-02-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-10T00:00:00+00:00" />
+<title>Use simulation to calculate power in linear regression model (R) | Codes</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.da110f27d6a4d632dc8e162876b7216c5c1f82164fbdac7ff33021633767f034.css" >
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/en.search.min.abbe82caf3215f27d2a5f91d36b6d6e028ca55075a390b4b467b11107891c6e9.js" ></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Codes</span>
+  </a>
+</h2>
 
-  <body>
-    <nav>
-    <ul class="menu">
-      
-    </ul>
-    <hr/>
-    </nav>
 
-<div class="article-meta">
-<h1><span class="title">Use simulation to calculate power in linear regression model (R)</span></h1>
-<h2 class="author">Ting Wu</h2>
-<h2 class="date">2021/02/10</h2>
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
 </div>
 
-<main>
 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Use simulation to calculate power in linear regression model (R)</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown">
 
 
 <p>Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size. Be cautious not to calculate post hoc power, it’s not meaningful to calculate statistical powers for an effect with a known p value.</p>
@@ -121,16 +213,67 @@ ggplot(power_ests, aes(x=n, y=power)) +
   geom_line() +
   ylim(c(0, 1)) +
   theme_minimal()</code></pre>
+</article>
+ 
+      
 
-</main>
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
 
-  <footer>
-  <script src="//yihui.org/js/math-code.js"></script>
-<script async
-src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function select(element){const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(element);selection.removeAllRanges();selection.addRange(range);}
+document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(event){select(code.parentElement);if(navigator.clipboard){navigator.clipboard.writeText(code.parentElement.textContent);}});});})();</script>
+
+
+ 
+        
+      </footer>
+
+      
   
-  </footer>
-  </body>
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 

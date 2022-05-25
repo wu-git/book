@@ -3,27 +3,62 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/docs/blog-down/blog-down/</loc>
+    <lastmod>2018-11-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/plot/</loc>
+    <lastmod>2022-02-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/psm/</loc>
+    <lastmod>2021-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/</loc>
+    <lastmod>2022-02-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/</loc>
     <lastmod>2022-02-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>/posts/</loc>
     <lastmod>2022-02-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/sankey/sankey-020722/</loc>
+    <loc>/docs/plot/sankey/sankey-020722/</loc>
     <lastmod>2022-02-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/mixed-effect-model-icc/mixed-effect-and-ICC81121/</loc>
+    <loc>/posts/plot/sankey/sankey-020722/</loc>
+    <lastmod>2022-02-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/mixed-effect-model-icc/mixed-effect-and-icc81121/</loc>
     <lastmod>2021-08-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/PSM/psm/</loc>
+    <loc>/posts/mixed-effect-model-icc/mixed-effect-and-icc81121/</loc>
+    <lastmod>2021-08-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/psm/psm/psm/</loc>
+    <lastmod>2021-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/psm/psm/</loc>
     <lastmod>2021-05-10T00:00:00+00:00</lastmod>
   </url>
   
@@ -33,17 +68,22 @@
   </url>
   
   <url>
-    <loc>/post/collinearity/collinearity/</loc>
+    <loc>/docs/collinearity/collinearity/</loc>
     <lastmod>2021-04-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/Repeated-measurements/</loc>
+    <loc>/posts/collinearity/collinearity/</loc>
     <lastmod>2021-04-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/SAS/</loc>
+    <loc>/tags/repeated-measurements/</loc>
+    <lastmod>2021-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/sas/</loc>
     <lastmod>2021-04-12T00:00:00+00:00</lastmod>
   </url>
   
@@ -53,38 +93,52 @@
   </url>
   
   <url>
-    <loc>/post/longitudinal-plot/longitudinal-plot/</loc>
+    <loc>/docs/longitudinal-plot/longitudinal-plot/</loc>
     <lastmod>2021-03-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/odds-ratio-forest-plot/odds-ratio-forest-plot/</loc>
+    <loc>/posts/longitudinal-plot/longitudinal-plot/</loc>
+    <lastmod>2021-03-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/plot/odds-ratio-forest-plot/odds-ratio-forest-plot/</loc>
     <lastmod>2021-02-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</loc>
+    <loc>/posts/odds-ratio-forest-plot/odds-ratio-forest-plot/</loc>
     <lastmod>2021-02-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/R/</loc>
+    <loc>/docs/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</loc>
+    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</loc>
+    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
     <lastmod>2018-11-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/R-blogdown/</loc>
+    <loc>/tags/r-blogdown/</loc>
     <lastmod>2018-11-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/blog-down/blog-down/</loc>
+    <loc>/posts/blog-down/blog-down/</loc>
     <lastmod>2018-11-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
-    <lastmod>2016-05-05T21:48:51-07:00</lastmod>
+    <loc>/docs/psm/ps-weighting/ps-weighting/</loc>
   </url>
   
 </urlset>

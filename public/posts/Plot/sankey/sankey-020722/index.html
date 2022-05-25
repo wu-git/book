@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Sankey Diagram is a popular data visualization for data flows display. For example, hospitals from better, average, worse performance categories can fall into different performance categories after quality improvement efforts. A Sankey diagram can be used to display such a change in categories. The categorical buckets (nodes) are represented by boxes or text at each column in the plot. The transition across nodes are connected by links. These links have a width proportional to the weight of the flow, which could be percentage the or number of subjects.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="Sankey diagram (R)" />
+<meta property="og:description" content="A Sankey Diagram is a popular data visualization for data flows display. For example, hospitals from better, average, worse performance categories can fall into different performance categories after quality improvement efforts. A Sankey diagram can be used to display such a change in categories. The categorical buckets (nodes) are represented by boxes or text at each column in the plot. The transition across nodes are connected by links. These links have a width proportional to the weight of the flow, which could be percentage the or number of subjects." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/plot/sankey/sankey-020722/" />
+<meta property="article:published_time" content="2022-02-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-07T00:00:00+00:00" />
+<title>Sankey diagram (R) | Code Notes</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.da110f27d6a4d632dc8e162876b7216c5c1f82164fbdac7ff33021633767f034.css" >
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/en.search.min.0d4159201462ccf92abfecab716bb0b3f388f34ab98c42d1942d3f22019fefd8.js" ></script>
+
+  <script defer src="/sw.min.74a8bb07f0bee86d6bb9a2750f073f14d93c7e4512f28860370cfd879e9719b4.js" ></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-XXXXXXXXX-X', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Code Notes</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/blog-down/blog-down/" class="">Using R Blogdown for Site Building</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-31f51f1e983d3fcd191b1a670dd370c1" class="toggle"  />
+    <label for="section-31f51f1e983d3fcd191b1a670dd370c1" class="flex justify-between">
+      <a href="/docs/plot/" class="">Plot</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/plot/sankey/sankey-020722/" class="">Sankey diagram (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/plot/odds-ratio-forest-plot/odds-ratio-forest-plot/" class="">Odds Ratio Forest Plot (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0a41e1f9be9b219b00fc23f1b7c32d3f" class="toggle"  />
+    <label for="section-0a41e1f9be9b219b00fc23f1b7c32d3f" class="flex justify-between">
+      <a href="/docs/psm/" class="">Propensity score methods</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/psm/psm/psm/" class="">Propensity score methods-I PS Matching (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/psm/ps-weighting/ps-weighting/" class="">Propensity score weighting methods (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mixed-effect-model-icc/mixed-effect-and-icc81121/" class="">Mixed effect model simulation and ICC (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/collinearity/collinearity/" class="">Collinearity (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/longitudinal-plot/longitudinal-plot/" class="">Longitudinal plot (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/" class="">Use simulation to calculate power in linear regression model (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Sankey diagram (R)</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/plot/sankey/sankey-020722/">Sankey diagram (R)</a>
+  </h1>
+  
+  <h5>Feb 7, 2022</h5>
+
+
+
+  
+
+  
+
+
+
+
+
+
+<p>A Sankey Diagram is a popular data visualization for data flows display. For example, hospitals from better, average, worse performance categories can fall into different performance categories after quality improvement efforts. A Sankey diagram can be used to display such a change in categories. The categorical buckets (nodes) are represented by boxes or text at each column in the plot. The transition across nodes are connected by links. These links have a width proportional to the weight of the flow, which could be percentage the or number of subjects.</p>
+<p>The R package (networkD3) can be used to create a sankey diagram. The key is to construct two dataset: 1) nodes: coding each bucket at different column in a sequential order, a group variable can be added; 2) links: the connections across different nodes. A detailed reference and examples for the R package can be reviewed here: <a href="https://www.data-to-viz.com/graph/sankey.html" class="uri">https://www.data-to-viz.com/graph/sankey.html</a></p>
+<p>A data example: The goal of the following codes are to describe the change of locations after a left ventricular assist device (LVAD) implant (day 0) at day 90, 180 and 365. These possible locations such as home, SNF, hospitals, death, etc are coded as 1 to 9. Given the sensitivity of the data, the following codes may not be comprehensible without the data context.</p>
+<pre class="r"><code>#the nodes data can be managed manually, the key is that the first entry would be recognized as 0 in the sankey diagram function, thus the coding order has to be started with 0; 
+nodes&lt;- read.csv (&quot;.../nodes2.csv&quot;)
+
+
+dat&lt;- read.csv (&quot;../final_location_4dates_w.csv&quot;)
+
+library(tidyverse)
+
+dat$cat_location_d0_re=0
+dat$cat_location_d90 [is.na(dat$cat_location_d90)]=9  # coding the NA subject as censor; 
+dat$cat_location_d180 [is.na(dat$cat_location_d180)]=9  # coding the NA subject as censor; 
+dat$cat_location_d365 [is.na(dat$cat_location_d365)]=9  # coding the NA subject as censor; 
+
+# recode the locations at day 180 and day 365 to the sequential coding (day 90 is already set); 
+dat11&lt;- dat %&gt;% mutate(cat_location_d180_re = recode(cat_location_d180, &quot;1&quot;=&quot;10&quot;,&quot;2&quot;=&quot;11&quot;, &quot;3&quot;=&quot;12&quot;,&quot;4&quot;=&quot;13&quot;,&quot;5&quot;=&quot;14&quot;, &quot;6&quot;=&quot;15&quot;, &quot;7&quot;=&quot;16&quot;,&quot;8&quot;=&quot;17&quot;, &quot;9&quot;=&quot;18&quot;))
+dat12 &lt;- dat11 %&gt;% mutate(cat_location_d365_re = recode(cat_location_d365, &quot;1&quot;=&quot;19&quot;,&quot;2&quot;=&quot;20&quot;, &quot;3&quot;=&quot;21&quot;,&quot;4&quot;=&quot;22&quot;,&quot;5&quot;=&quot;23&quot;, &quot;6&quot;=&quot;24&quot;, &quot;7&quot;=&quot;25&quot;,&quot;8&quot;=&quot;26&quot;, &quot;9&quot;=&quot;27&quot;))
+
+
+# count the weight of each transition from day 0 (d0) to day 90 (d90); 
+
+dat1&lt;- data.frame(dplyr::count_(dat12, vars = c(&#39;cat_location_d0_re&#39;,&#39;cat_location_d90&#39;)))
+
+# rename the variables; 
+dat1 &lt;- dat1 %&gt;%
+  rename(source=cat_location_d0_re,
+         target=cat_location_d90 ,
+          weight=n)
+
+# count the weight of each transition from day 90 to day 180; 
+dat2&lt;- data.frame(dplyr::count_(dat12, vars = c(&#39;cat_location_d90&#39;,&#39;cat_location_d180_re&#39;)))
+
+dat2 &lt;- dat2 %&gt;%
+  rename(source=cat_location_d90,
+         target=cat_location_d180_re ,
+         weight=n)
+
+# count the weight of each transition from day 180 to day 365; 
+
+dat3&lt;- data.frame(dplyr::count_(dat12, vars = c(&#39;cat_location_d180_re&#39;,&#39;cat_location_d365_re&#39;)))
+
+dat3 &lt;- dat3 %&gt;%
+  rename(source=cat_location_d180_re,
+         target=cat_location_d365_re ,
+         weight=n)
+
+# combine the data above into one links data; 
+links2 &lt;-data.frame (rbind(dat1, dat2, dat3))
+
+# prepare the variables for sankeynetwork function; 
+links2$source= as.numeric(links2$source)
+links2$target= as.numeric(links2$target)
+
+nodes$group &lt;- as.factor(nodes$group )
+
+# Give a color for each group:
+my_color &lt;- &#39;d3.scaleOrdinal() .domain([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;,&quot;g&quot;,&quot;h&quot;,&quot;i&quot;,&quot;j&quot;]) .range([&quot;#69b3a2&quot;, &quot;steelblue&quot;, &quot;grey&quot;,&quot;green&quot;,&quot;pink&quot;,&quot;brown&quot;,&quot;blue&quot;,&quot;orange&quot;,&quot;red&quot;,&quot;yellow&quot;])&#39;
+
+# make the sankey diagram; 
+
+p &lt;- sankeyNetwork(Links = links2, Nodes = nodes,
+                   Source = &quot;source&quot;, Target = &quot;target&quot;,
+                   Value = &quot;weight&quot;, NodeID = &quot;name&quot;, 
+                   fontSize = 11, nodeWidth =20,
+                   colourScale=my_color,NodeGroup=&quot;group&quot;,
+                   sinksRight=FALSE)
+p</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function select(element){const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(element);selection.removeAllRanges();selection.addRange(range);}
+document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(event){select(code.parentElement);if(navigator.clipboard){navigator.clipboard.writeText(code.parentElement.textContent);}});});})();</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "my-site" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

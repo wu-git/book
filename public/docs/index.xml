@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docs on Code Notes</title>
+    <link>/docs/</link>
+    <description>Recent content in Docs on Code Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 07 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using R Blogdown for Site Building</title>
+      <link>/docs/blog-down/blog-down/</link>
+      <pubDate>Thu, 08 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/blog-down/blog-down/</guid>
+      <description>Using R Blogdown for Site Building #  It&amp;rsquo;s such a learning experience in setting up a website using github+ terminal + R blogdown + netlify for me. In general, I followed the post from [Alison Hill] (https://alison.rbind.io/post/up-and-running-with-blogdown/).
+A couple of problems have occured and I have searched very hard to resolve them.
+   R crash whenever I tried to open projects in Mac OS system.    Solution: download update R version from (https://www.</description>
+    </item>
+    
+    <item>
+      <title>Mixed effect model simulation and ICC (R)</title>
+      <link>/docs/mixed-effect-model-icc/mixed-effect-and-icc81121/</link>
+      <pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/mixed-effect-model-icc/mixed-effect-and-icc81121/</guid>
+      <description>Mixed effect model simulation and ICC Data example: Mixed effect model was simulated using parameters obtained from a pilot data. Intraclass correlation coefficient was calculated from the mixed effect model to test the agreement between raters. In this example, videos as the subjects were assessed by different raters, each rater will be assigned to multiple videos. nstand is parameter for the number of videos which will be assessed by various raters (nraters).</description>
+    </item>
+    
+    <item>
+      <title>Collinearity (SAS)</title>
+      <link>/docs/collinearity/collinearity/</link>
+      <pubDate>Mon, 12 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/collinearity/collinearity/</guid>
+      <description>Collinearity Collinearity occurs when two variables are highly correlated with each other. Collinearity may cause inflation in standard errors for the given risk factors. However, this is not an issue for prediction purpose. If the collinearity doesn’t involve the risk factors of interest, it’s not a big issue to include the collinear variables for risk adjustment.
+To check for collinearity, SAS PROC Reg has a convenient option. But SAS logistic or COX do not have corresponding option to check collinearity issues.</description>
+    </item>
+    
+    <item>
+      <title>Longitudinal plot (SAS)</title>
+      <link>/docs/longitudinal-plot/longitudinal-plot/</link>
+      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/longitudinal-plot/longitudinal-plot/</guid>
+      <description>Longitudinal plot About the data example: The aortic root sizes were measured over time for two groups of patients. The change of root size over time is of interest. In this analysis, we first plotted the group mean at each discrete time to visualize the root growth, secondly modeled the continuous time effect of root growth. The data is setup in a long format that each subject with ID (sBAV_ID_Number) has multiple rows with multiple measurements at different times.</description>
+    </item>
+    
+    <item>
+      <title>Use simulation to calculate power in linear regression model (R)</title>
+      <link>/docs/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</link>
+      <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/docs/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/</guid>
+      <description>Use simulation to calculate power in linear regression model Simple power calculations can be done through PROC POWER in SAS. Simulation methods can provide more flexibility in calculating the power of estimates of interest. what we know is the estimated effect size from pilot analysis based on existing data or prior literature effect size. To vary the effect size given we never know the true effect size, we may calculate the statistical powers for increasing or decreasing 5% of the “estimated” effect size.</description>
+    </item>
+    
+  </channel>
+</rss>

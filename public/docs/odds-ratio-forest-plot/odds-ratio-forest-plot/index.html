@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Odds Ratio Forest Plot Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,a change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="Odds Ratio Forest Plot (R)" />
+<meta property="og:description" content="Odds Ratio Forest Plot Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,a change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/docs/odds-ratio-forest-plot/odds-ratio-forest-plot/" />
+<meta property="article:published_time" content="2021-02-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-10T00:00:00+00:00" />
+<title>Odds Ratio Forest Plot (R) | Codes</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.da110f27d6a4d632dc8e162876b7216c5c1f82164fbdac7ff33021633767f034.css" >
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/en.search.min.46fb2accd0adff88c4016a61ad23771e026ca43c260c17407b15aeb356f274fd.js" ></script>
+
+  <script defer src="/sw.min.74a8bb07f0bee86d6bb9a2750f073f14d93c7e4512f28860370cfd879e9719b4.js" ></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-XXXXXXXXX-X', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Codes</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/blog-down/blog-down/" class="">Using R Blogdown for Site Building</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-31f51f1e983d3fcd191b1a670dd370c1" class="toggle"  />
+    <label for="section-31f51f1e983d3fcd191b1a670dd370c1" class="flex justify-between">
+      <a href="/docs/plot/" class="">Plot</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/plot/sankey/sankey-020722/" class="">Sankey diagram (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0a41e1f9be9b219b00fc23f1b7c32d3f" class="toggle"  />
+    <label for="section-0a41e1f9be9b219b00fc23f1b7c32d3f" class="flex justify-between">
+      <a href="/docs/psm/" class="">Propensity score methods</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/psm/psm/psm/" class="">1. Propensity score methods-I PS Matching (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/psm/ps-weighting/ps-weighting/" class="">2.Propensity score weighting methods (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mixed-effect-model-icc/mixed-effect-and-icc81121/" class="">Mixed effect model simulation and ICC (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/collinearity/collinearity/" class="">Collinearity (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/longitudinal-plot/longitudinal-plot/" class="">longitudinal plot (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/odds-ratio-forest-plot/odds-ratio-forest-plot/" class="active">Odds Ratio Forest Plot (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/" class="">Use simulation to calculate power in linear regression model (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Odds Ratio Forest Plot (R)</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown">
+
+
+<div id="odds-ratio-forest-plot" class="section level3">
+<h3>Odds Ratio Forest Plot</h3>
+<p>Odds ratios from logistic models are often present using forest plots. Given the coefficients of logistic models are exponentiated to obtain the odds ratios, odds ratios are NOT symmetric on a linear scale. For example,a change from an odds ratio between 0.4 and 0.5 is the same relative change (25% increase) as that between 2.0 and 2.5. But on the linear scale the difference is 0.1 and 0.5 respectively. An odds ratio between 0-1 indicates a decrease of odds, while an odds ratio greater than 1 indicates an increase in odds. The standard errors of odds ratio will also be misleading when plotting on a linear scale. Although looking at an x-axis in log scale may not be intuitive, it’s a much fair visualization on a log scale when you may compare odds ratio across different risk factors in the forest plot.</p>
+<pre class="r"><code>library(ggplot2)
+
+# Create labels
+boxLabels = c(&quot;year&quot;, &quot;age X10&quot;, &quot;hct&quot;, &quot;race (black vs. caucasion)&quot;, &quot;bsa (1.6-1.8 vs. &lt;1.6)&quot;, &quot;bsa (1.8-2.0 vs. &lt;1.6)&quot;, &quot;bsa (&gt;=2.0 vs. &lt;1.6)&quot;, 
+              &quot;Gender (female vs. male)&quot;, &quot;diabetes&quot;, &quot;PVD&quot;, )
+
+
+# you may enter odds ratio and 95% CL either option1:manually or options2: reading in data;
+# option1: Enter summary data. boxOdds are the odds ratios (calculated elsewhere), boxCILow is the lower bound of the CI, boxCIHigh is the upper bound.
+
+df &lt;- data.frame(
+  yaxis = length(boxLabels):1,
+  boxOdds = c(1.012,1.252,0.954,1.497,0.826,0.882,1.164,1.07),
+  boxCILow = c(0.966,1.181,0.943,1.258,0.619,0.666,0.871,0.941),
+  boxCIHigh = c(1.06,1.327,0.965,1.781,1.103,1.167,1.555,1.217)
+)
+
+
+## option2: insert the odds ratio data; 
+df=read.csv(&quot;S:/CardiacSurg/Restricted/MSTCVS/Ting MSTCVS/race aki/oddsratio plot.csv&quot;,header=T,sep=&#39;,&#39;)
+
+df$yaxis=length(df$boxLabels):1
+
+# Plot
+p &lt;- ggplot(df, aes(x = boxOdds, y = yaxis))
+
+# using geom_vline to add reference line for odds ratio=1; 
+p + geom_vline(aes(xintercept = 1), size = .25, linetype = &quot;dashed&quot;) +
+  geom_errorbarh(aes(xmax = boxCIHigh, xmin = boxCILow), size = .5, height = .2, color = &quot;gray50&quot;) +
+  geom_point(size = 3.5, color = &quot;orange&quot;) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank()) +
+  scale_y_continuous(breaks = df$yaxis, labels = df$boxLabels) +
+  scale_x_continuous(breaks = seq(0,7,0.5) ) +
+  #using log scale for the x axis
+  coord_trans(x = &quot;log10&quot;) +
+  ylab(&quot;&quot;) +
+  xlab(&quot;Odds ratio (log scale)&quot;) +
+  annotate(geom = &quot;text&quot;, y =1.1, x = 3, label =&quot;&quot;, size = 3.5, hjust = 0) + ggtitle(&quot;Odds ratios for AKI stage 2-3&quot;)</code></pre>
+</div>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function select(element){const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(element);selection.removeAllRanges();selection.addRange(range);}
+document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(event){select(code.parentElement);if(navigator.clipboard){navigator.clipboard.writeText(code.parentElement.textContent);}});});})();</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "my-site" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

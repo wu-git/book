@@ -1,0 +1,25 @@
+---
+title: "Collinearity (SAS)"
+output: html_document
+author: Ting Wu
+date: '2021-04-12'
+categories:
+  - SAS
+tags:
+  - Repeated measurements
+
+---
+
+
+
+<div id="collinearity" class="section level3">
+<h3>Collinearity</h3>
+<p>Collinearity occurs when two variables are highly correlated with each other. Collinearity may cause inflation in standard errors for the given risk factors. However, this is not an issue for prediction purpose. If the collinearity doesn’t involve the risk factors of interest, it’s not a big issue to include the collinear variables for risk adjustment.</p>
+<p>To check for collinearity, SAS PROC Reg has a convenient option. But SAS logistic or COX do not have corresponding option to check collinearity issues. As the collinearity validation does not depend on the model, it is ok to have the set of variables in PROC Reg (with a “makeup” outcome) to check for collinearity.</p>
+<pre class="r"><code>proc reg data=dat ;
+   model BMI =ef gender age_at_operation HTN PreopCRF_  HistoryofCVA PriorCardSx severeAI  AcuteMI  
+creatinine DebakeyDissectionClass cardiogenicshock AcuteParalysis/  tol vif collinoint;
+quit;</code></pre>
+<p>For the collinearity test, the procedure will take one of variable as the outcome and regress it against all the other remaining variables.</p>
+<p>Collinearity is present when the VIF is higher than 5 to 10 or the condition indices are higher than 10 to 30. To look for the collinear variables, find the variables with the condition index higher than 10 to 30 and the proportion of variation are higher than 0.8 to 0.9 in the collinearity diagnostics table.</p>
+</div>

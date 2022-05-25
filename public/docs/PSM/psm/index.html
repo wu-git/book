@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.
+Variables consideration for propensity score model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome).">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="Propensity score methods-I PS Matching (SAS)" />
+<meta property="og:description" content="Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.
+Variables consideration for propensity score model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/docs/psm/psm/" />
+<meta property="article:published_time" content="2021-05-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-05-10T00:00:00+00:00" />
+<title>Propensity score methods-I PS Matching (SAS) | Codes</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.da110f27d6a4d632dc8e162876b7216c5c1f82164fbdac7ff33021633767f034.css" >
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/en.search.min.d8a5dc5a08daf9a82b9338b4f1c5a7cf62316e11f69fcfe1ba578318c8d0a3e6.js" ></script>
+
+  <script defer src="/sw.min.74a8bb07f0bee86d6bb9a2750f073f14d93c7e4512f28860370cfd879e9719b4.js" ></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Codes</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/plot/sankey/sankey-020722/" class="">Sankey diagram (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/mixed-effect-model-icc/mixed-effect-and-icc81121/" class="">Mixed effect model simulation and ICC (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/psm/psm/" class="active">Propensity score methods-I PS Matching (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/collinearity/collinearity/" class="">Collinearity (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/longitudinal-plot/longitudinal-plot/" class="">longitudinal plot (SAS)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/odds-ratio-forest-plot/odds-ratio-forest-plot/" class="">Odds Ratio Forest Plot (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/power-linear-regression-model/simulation-to-calculate-power-in-linear-regression-model/" class="">Use simulation to calculate power in linear regression model (R)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/blog-down/blog-down/" class="">Using R Blogdown for Site Building</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ps-weighting/ps-weighting/" class="">Propensity score weighting methods (R)</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Propensity score methods-I PS Matching (SAS)</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown">
+
+
+<p>Propensity score methods include 1) propensity score matching; 2) stratification on the propensity score; 3)IPTW: inverse probability of treatment weighting; 4) covariate adjustment using the propensity score. The codes below only apply to propensity score matching.</p>
+<ol style="list-style-type: decimal">
+<li><p>Variables consideration for propensity score model: To correctly specify the propensity score model, one should include the true confounders (the risk factors that are associated with the ‘treatment’ and outcome) and the potential confounders (the risk facotrs that are associated with the outcome). As no one knows the true model, a safe way to do (when sample size is not a concern) is to include all baseline risk factors. This way could potentially reduce the matching rate expecially when sample size is small.</p></li>
+<li><p>To check balance of propensity score matched sample, one should use standardized difference. A threshold of less than 10% of standardized difference may be used to consider balancing between treatment and control group. SAS defaultly used 0.25 as the cutoff for standardized difference. Using p-values to determine balance is discouraged given that 1)p-values are sensitive to sample size. 2) p values are inference from a “superpopulation”, the balance is an attribute to the particular matched sample. One could calculate the standardized difference with the following codes, or use the following formula.</p></li>
+</ol>
+<p>The standardized difference for a continous variable is</p>
+<p><span class="math display">\[ d= \frac {\overline{x}_{treatment}-\overline{x}_{control}}{\sqrt {\frac{s^2_{treatment}+s^2_{control}}{2}}} \]</span></p>
+<p>The standardized difference for a binary variable is</p>
+<p><span class="math display">\[ d=\frac {\hat{p}_{treatment}-\hat{p}_{control}}{\sqrt {\frac{\hat{p}_{treatment} (1-\hat{p}_{treatment})+ \hat{p}_{control} (1-\hat{p}_{control})}{2}}} \]</span></p>
+<p>Reference: Peter C. Austin.An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Outcome analyis after matching</li>
+</ol>
+<p>3.1 After you obtain a matched sample and verify the balancing of the two treatment groups of interest, you may proceed to outcome analysis using the matched data. Some suggest that conditional logistic model or paired t-tests may be needed to account for the matching pairs, while others suggest conditional on pairs is not necessary for the outcome analysis given the matched sample mimics randomized trial data. In a daily analysis, usual regression model or tests can be performed without accounting for the matching pairs.</p>
+<p>3.2 one to various ratio matching</p>
+<p>When one control is matched to many treatments, and the ratio is not constant, for example, 1:2, 1:1, 1:4 were all possible matching ratio. The outcome analysis tests need to be weighted by the number of controls. For example, if one treatment is matched to 4 controls, each control should be weighted as 1/4. The analysis codes are often needed an observation weight statement as shown below in 4.1 code example.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Implementation</li>
+</ol>
+<p>4.1 A Sas procedure: SAS psmatch procedure provides convienient implementation for these PS methods, the output also quantifies the standardized difference. Here is an code example for one to many matching.</p>
+<pre class="r"><code>/* propensity score model for group as the treatment, matching variables: age, gender, COPD and acute stroke */
+
+proc psmatch data=aortic;
+class group gender_ COPD AcuteStroke ;
+psmodel group (treated=&#39;1&#39;)=  age_at_operation  gender_ COPD AcuteStroke;
+match  method=varratio(kmin=1 kmax=3)   caliper=0.5;
+assess lps var=(age_at_operation  gender_ COPD AcuteStroke ) / plots=StdDiff;
+output out(obs=match)=Matched1N1k   ATTWGT=attwgt matchid=mid;
+run;
+
+* note that _MATCHWGT_ indicates the weighting based on the matching ratio;
+* attwgt indicates the weights based on propensity score to calculate average treatment effect on the treated (ATT), atewgt indicates the weights to calculate average treatment effect (ATE). 
+* for IPTW to assess the balance of the weighted sample, in the assess statement , WEIGHT= ATTWGT or ATEWGT could be used to diagnosis the balance. 
+
+*outcome analysis; 
+proc freq data=Matched1N1k;
+table group*Mt30Stat  / nocol nopercent cmh;
+weight _MATCHWGT_;
+run;
+
+proc sort data=Matched1N1k; by mid;run;
+proc ttest data=Matched1N1k;
+class group;
+var age_at_operation;
+weight _MATCHWGT_;
+run;</code></pre>
+<p>4.2. STATA: STATA provide psmatch2, teffects command. The output has ATT, ATE calculated. The command is simple and straightforward, but it is difficult to customize to meet additional analytic need, such as extracting the matched data.</p>
+<p>4.3 A SAS macro: The below uses a SAS macro to find matching samples. The pros of using this extensive macro code is that it allows you to modify the matching criterials. For example, if one wants to do matching within a same center, you may modify the macro matching condition.</p>
+<pre class="r"><code>/* modify the macro matching condition as the following: */
+%if %upcase(&amp;method) = CALIPER %then %do;
+if (pscoreT - &amp;caliper) &lt;= pscoreC &lt;= (pscoreT + &amp;caliper) and center_idC=center_idT then do;</code></pre>
+<p>Here is the code example of using a sas macro for PSM method;</p>
+<pre class="r"><code>/*using the logistic model to build propensity score model for having autologous blood (variable: autoblood) 
+/*(autologous blood is done before cardiac surgery to collect the patients own blood); 
+
+* rename autoblood as the treatment group; 
+data dat; set dat; group=AutoBlood; run;
+* assign the subject id; 
+data dat; set dat; subject_id=_n_;run;
+
+
+* the propensity score model for treatment group; 
+ proc logistic data=dat descending outest=betas; 
+   class  gender CAD_ Any_RF_Preop AcuteStroke PriorCardSx cardiogenicShock severe_AI /param=ref ;
+   model AutoBlood (event=&#39;1&#39;)=  age_at_operation  BMI RFHemoglobin_ gender AcuteStroke PriorCardSx cardiogenicShock    ; 
+  *output the dataset &quot;predic&quot; which have predprob: predprob is the probability scale, and xbeta is the linear predictor;
+   output out=predic p=predprob xbeta=logit; 
+run;
+
+* if using the probability scale as the propensity score to do matching, then using predprob as the pscoreT/C;
+* if using the logit scale as the propensity score for matching, then using xbeta as the pscoreT/C; 
+data treatment(rename =(subject_id=idT logit= pscoreT  ) );set predic; where group=1 ; run;
+data control (rename =(subject_id=idC logit= pscoreC) ); set predic; where group=0; run;
+
+***********
+* when matching within center, you will need to assign center id to each center, and modify the macro codes; 
+data treatment(rename =(subject_id=idT predprob_r= pscoreT center_id=center_idT ) );set predic2; where treat=1 ; run;
+data control (rename =(subject_id=idC predprob_r= pscoreC center_id=center_idC)); set predic2; where treat=0; run;
+*****************
+  
+* using the propensity score matching macro; 
+%include &#39;xx\propensity score matching macro\psmatching.sas&#39;;
+
+proc means data=predic; var logit; output out=stddata (keep =std) std=std;run; 
+
+* using the 0.1 standardard deviation of the propensity score as the caliper for finding matching; 
+data stddata; set stddata; caliper=0.1*std;run;  
+
+
+*one-to-one matching, no replacement, caliper matching; 
+%PSMatching(datatreatment= treatment, datacontrol= control, method= CALIPER,
+      numberofcontrols=1, caliper=0.0844, replacement= no, out= caliper_matches2);  
+
+
+data treatment2 (keep=idT  rename=(idT=MatchedToTreatID) ); set treatment;run;
+data control2 (keep=idC  rename=(idC=IdSelectedControl  )); set control;run;
+
+proc sort data=caliper_matches2 nodupkey out=test2; by MatchedToTreatID;run;   
+
+* create the data for matching sample; 
+data caliper_pairs;
+    set  caliper_matches2;
+    subject_id = IdSelectedControl; pscore = PScoreControl; pair = _N_;
+    output;
+    subject_id = MatchedToTreatID; pscore = PScoreTreat; pair = _N_;
+    output;
+    keep subject_id  pscore pair;run;
+
+* merging the dataset with the original sample to have the other covariates; 
+proc sort data=dat; by subject_id;run;
+proc sort data=caliper_pairs; by subject_id;run;
+
+data merge_pairs; 
+   merge caliper_pairs (in=a) dat (in=b); 
+   by subject_id;
+   if a=1 and b=1;run;
+
+
+*check balance for continuous variables by plotting the empirical distribution between treatment and control groups ; 
+
+proc npar1way d edf plots=edfplot data=merge_pairs  scores=data;
+class group;
+var pscore  age_at_operation  BMI RFHemoglobin_  ;
+run;
+
+
+proc sort data=merge_pairs; by group;run;
+proc means  data=merge_pairs mean median p25 p75; 
+var age_ pre_op_creatinine ef__pre_; 
+class group;
+run;
+
+
+* MACRO: use standardized difference for checking balance for binary variables;
+%macro binary (var=, label=);
+proc means  data=merge_pairs mean noprint; 
+var &amp;var; 
+by group;
+output out=outmean (keep=group mean ) mean=mean ;
+run;
+
+data del0; set outmean; if group=0; mean_0 =mean;  keep mean_0;run;
+data del1; set outmean; if group=1; mean_1 =mean;  keep mean_1;run;
+
+
+data newdata; 
+  length label $25;
+  merge del0 del1;
+  d= (mean_1-mean_0)/sqrt ((mean_1*(1-mean_1)+mean_0*(1-mean_0))/2);
+  d=round(abs(d),0.0001);
+  label=&amp;label;
+  keep d label;
+  run;
+
+  proc append data=newdata base=standiff (keep=d label) force;run;
+  %mend binary;
+proc sort data=merge_pairs; by group;run;
+
+
+* make sure the variables were coded as numeric variables; 
+data merge_pairs; set merge_pairs; if gender=&quot;1&quot; then gender_=1; else gender_=0;run;
+
+%binary (var=gender_, label=&quot;gender&quot;)
+%binary (var=CAD_, label=&quot;CAD_&quot;)
+%binary (var=severe_AI, label=&quot;severe_AI&quot;)
+
+proc print data=standiff;run;
+
+
+* using the matching samples, look at outcome difference with the conditional logistic model; 
+proc logistic data=merge_pairs; 
+  class group (ref=&#39;0&#39;);
+  model OperativeMortality (event=&#39;1&#39;)=group; 
+  strata pair;
+  run;
+
+
+* using the matching samples, look at survival difference with cox model accounting for the pairs; 
+proc phreg data=merge_pairs  ; 
+class group (ref=&#39;0&#39;) pair; 
+model time_since_surgery*death (0)=group;
+random pair;
+hazardratio group/diff=ref;
+run;</code></pre>
+<p>The below is the propensity score matching MACRO as referred above:</p>
+<pre class="r"><code>#SAS Macro for obtaining propensity score matching samples;
+
+
+/************************************************ 
+    PSmatching.sas   adapted from
+    
+    Paper 185-2007  SAS Global Forum 2007
+    Local and Global Optimal Propensity Score Matching
+    Marcelo Coca-Perraillon
+    Health Care Policy Department, Harvard Medical School, Boston, MA
+    
+    -------------------------------
+ Treatment and Control observations must be in separate datasets such that 
+    Control data includes: idC =  subject_id, pscoreC = propensity score
+    Treatment data includes: idT, pscoreT
+    id must be numeric  
+    
+    method = NN (nearest neighbor), caliper, or radius 
+    
+    caliper value = max for matching
+    
+    replacement = yes/no  whether controls can be matched to more than one case
+    
+    out = output data set name
+    
+    example call:
+    
+     %PSMatching(datatreatment= T, datacontrol= C, method= NN,
+      numberofcontrols= 1, caliper=, replacement= no, out= matches);
+      
+ Output format:
+           Id                  Matched
+       Selected     PScore       To       PScore
+Obs     Control    Control    TreatID     Treat
+  1      18628     0.39192     16143     0.39192
+  2      18505     0.23029     16158     0.23002
+  3      15589     0.29260     16112     0.29260
+
+All other variables discarded.   Reformat for merge on subject_id with original data:
+
+  data pairs;
+    set  matches;
+    subject_id = IdSelectedControl; pscore = PScoreControl; pair = _N_;
+    output;
+    subject_id = MatchedToTreatID; pscore = PScoreTreat; pair = _N_;
+    output;
+    keep subject_id pscore pair;
+
+
+************************************************/
+
+%macro PSMatching(datatreatment=, datacontrol=, method=, numberofcontrols=, caliper=,
+ replacement=, out=);
+
+/* Create copies of the treated units if N &gt; 1 */;
+ data _Treatment0(drop= i);
+  set &amp;datatreatment;
+  do i= 1 to &amp;numberofcontrols;
+  RandomNumber= ranuni(12345);
+output;
+end;
+run;
+/* Randomly sort both datasets */
+proc sort data= _Treatment0 out= _Treatment(drop= RandomNumber);
+by RandomNumber;
+run;
+data _Control0;
+set &amp;datacontrol;
+RandomNumber= ranuni(45678);
+run;
+proc sort data= _Control0 out= _Control(drop= RandomNumber);
+by RandomNumber;
+run;
+
+ data Matched(keep = IdSelectedControl PScoreControl MatchedToTreatID PScoreTreat);
+  length pscoreC 8;
+  length idC 8;
+/* Load Control dataset into the hash object */
+  if _N_= 1 then do;
+declare hash h(dataset: &quot;_Control&quot;, ordered: &#39;no&#39;);
+declare hiter iter(&#39;h&#39;);
+h.defineKey(&#39;idC&#39;);
+h.defineData(&#39;pscoreC&#39;, &#39;idC&#39;);
+h.defineDone();
+call missing(idC, pscoreC);
+end;
+/* Open the treatment */
+set _Treatment;
+%if %upcase(&amp;method) ~= RADIUS %then %do;
+retain BestDistance 99;
+%end;
+/* Iterate over the hash */
+rc= iter.first();
+if (rc=0) then BestDistance= 99;
+do while (rc = 0);
+/* Caliper */
+%if %upcase(&amp;method) = CALIPER %then %do;
+if (pscoreT - &amp;caliper) &lt;= pscoreC &lt;= (pscoreT + &amp;caliper) then do;
+ScoreDistance = abs(pscoreT - pscoreC);
+if ScoreDistance &lt; BestDistance then do;
+BestDistance = ScoreDistance;
+IdSelectedControl = idC;
+PScoreControl =  pscoreC;
+MatchedToTreatID = idT;
+PScoreTreat = pscoreT;
+end;
+end;
+%end;
+/* NN */
+%if %upcase(&amp;method) = NN %then %do;
+ScoreDistance = abs(pscoreT - pscoreC);
+if ScoreDistance &lt; BestDistance then do;
+BestDistance = ScoreDistance;
+IdSelectedControl = idC;
+PScoreControl =  pscoreC;
+MatchedToTreatID = idT;
+PScoreTreat = pscoreT;
+end;
+%end;
+
+%if %upcase(&amp;method) = NN or %upcase(&amp;method) = CALIPER %then %do;
+rc = iter.next();
+/* Output the best control and remove it */
+if (rc ~= 0) and BestDistance ~=99 then do;
+output;
+%if %upcase(&amp;replacement) = NO %then %do;
+rc1 = h.remove(key: IdSelectedControl);
+%end;
+end;
+%end;
+/* Radius */
+%if %upcase(&amp;method) = RADIUS %then %do;
+if (pscoreT - &amp;caliper) &lt;= pscoreC &lt;= (pscoreT + &amp;caliper) then do;
+IdSelectedControl = idC;
+PScoreControl =  pscoreC;
+MatchedToTreatID = idT;
+PScoreTreat = pscoreT;
+output;
+end;
+rc = iter.next();
+%end;
+end;
+run;
+/* Delete temporary tables. Quote for debugging */
+proc datasets;
+delete _:(gennum=all);
+
+run;
+ data &amp;out;
+   set Matched;
+ run;
+%mend PSMatching;</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function select(element){const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(element);selection.removeAllRanges();selection.addRange(range);}
+document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(event){select(code.parentElement);if(navigator.clipboard){navigator.clipboard.writeText(code.parentElement.textContent);}});});})();</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

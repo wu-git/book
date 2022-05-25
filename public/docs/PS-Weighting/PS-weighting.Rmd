@@ -1,0 +1,175 @@
+---
+title: "Propensity score weighting methods (R)"
+output: html_document
+---
+
+Propensity score (PS) weighting methods include inverse probability treatment weighting (IPTW). , matching weighting, overlap weighting. These methods all used propensity score to weight the observations, resulting in a “pseudo” balancing sample. 
+Inverse probability weighting is a common approach, however, often come with a problem with extreme weights. In the case of extreme weights, some cases may be weighted much larger than the other cases, thus skew the effect. To deal with extreme weight, one may suggest truncating the weight. But this will exclude some observations, and the cutoff of the “extreme” weight is often artificial. In addition, when the propensity scores of the treatment and control groups have little area of overlapping, IPTW violates the assumption of common support.  Best practice for IPTW can be reviewed in this article (Ref: PC. Austin Stat Med 2015).  The alternative to IPTW is to use overlapping weight. Here is the key reference for overlapping weight: https://www2.stat.duke.edu/~fl35/OW.html
+
+Here is the key point about the relationship between overlapping weight vs. regular IPTW weight.  In below, h(x) will be the numerator, and the regular weight (denominator) would be the inverse probability weight. Applying a different numerator h(x) will yield different weights (weight (w1,w0)). 
+
+![](/docs/PS-Weighting/fig1.jpeg)
+
+Fig.1 (Source: Fan Li https://www2.stat.duke.edu/~fl35/OW.html)
+
+
+![](/docs/PS-Weighting/fig2.jpeg)
+
+Fig.2 ((Source: Fan Li https://www2.stat.duke.edu/~fl35/OW.html))
+
+
+
+
+Here the $ \{w}_{i} $ (weight) can be replaced by different weights in Fig 1. 
+
+To obtain the “double robust” estimator (i.e. the augmented estimator), we could follow this equation: 
+
+
+![](/docs/PS-Weighting/fig3.jpeg)
+
+Fig. 3 (Source: Liang Li* and Tom Greene. A Weighting Analogue to Pair Matching in Propensity Score Analysis. The international Journal of Biostatistics 2013)
+
+
+After applying the weights, it's critical to check balance of the weighted sample. Standardized mean difference can be calculated and ploted. 
+
+Here are the R codes to apply the weights and calculate the IPTW ATE or the overlapping weight ATE.
+
+
+```{r, out.width = "400px", eval=FALSE}
+
+### step 1. propensity score model####
+ps_model <-  glm(extub_or2 ~ 
+                   age+ gender_+ race_ +  chrlungd_ +nyh34+ hdef_4c +status_ +robotic_ +armusproctype+centerid 
+                 ,data=dat3,family = binomial(link = "logit") )
+
+summary (ps_model)
+dat3$hatpi=predict(ps_model, dat3, type = "response")  # calculate the propensity score (the probability of having the treatment)
+
+### step2. outcome model###
+outcome_model <-glm(icuinhrs ~extub_or2+ age +gender_ +race_  +chrlungd_ +classnyh+ hdef_4c+
+                      status_+ robotic_ +armusproctype+centerid, data=dat3)
+
+
+summary (outcome_model)
+library(dplyr)
+
+# set dataset with treatment X=1 or X=0; 
+modeldat1<- mutate(dat3,
+                   extub_or2 = replace(extub_or2, extub_or2==0, 1))
+modeldat0<- mutate(dat3,
+                   extub_or2 = replace(extub_or2,extub_or2==1, 0))
+
+
+# calculate the predicted Y (the expected outcome) given X=1 or X=0; 
+dat3$predicty1=predict(outcome_model, modeldat1, type = "response")
+dat3$predicty0=predict(outcome_model, modeldat0, type = "response")
+
+
+#### Step3. ATE or augmented ATE based on propensity score weighting###
+dat3$A=dat3$extub_or2   #the treatment
+dat3$Y=dat3$icuinhrs     # the observed outcome
+#overlap weight
+dat3$h=(1-dat3$hatpi)*dat3$hatpi    #the h "numerator for overlap weight
+dat3$w_weight =dat3$h/ (dat3$A*dat3$hatpi + (1-dat3$A)*(1-dat3$hatpi))     #the overlap  weight- apply the numerators
+#matching weight
+dat3$h2=pmin((1-dat3$hatpi), dat3$hatpi)    #the h "numerator for matching weight
+dat3$w_weight2 =dat3$h2/ (dat3$A*dat3$hatpi + (1-dat3$A)*(1-dat3$hatpi))     #the matching weight
+
+#ATE with overlap weight
+ate= sum(dat3$A*dat3$w_weight*dat3$Y)/sum(dat3$A*dat3$w_weight)- sum((1-dat3$A)*dat3$w_weight*dat3$Y)/sum((1-dat3$A)*dat3$w_weight)
+
+#Augmented ATE with overlap weight
+aug_ate= sum (dat3$w_weight*(dat3$predicty1-dat3$predicty0))/sum(dat3$w_weight)+
+  sum (dat3$A*dat3$w_weight*(dat3$Y-dat3$predicty1))/sum(dat3$w_weight*dat3$A)-
+  sum ((1-dat3$A)*dat3$w_weight*(dat3$Y-dat3$predicty0))/sum(dat3$w_weight*(1-dat3$A))
+
+#ATE with matching weight
+ate2= sum(dat3$A*dat3$w_weight2*dat3$Y)/sum(dat3$A*dat3$w_weight2)- sum((1-dat3$A)*dat3$w_weight2*dat3$Y)/sum((1-dat3$A)*dat3$w_weight2)
+
+#Augmented ATE with matching weight +augmentation
+aug_ate2= sum (dat3$w_weight2*(dat3$predicty1-dat3$predicty0))/sum(dat3$w_weight2)+sum (dat3$A*dat3$w_weight2*(dat3$Y-dat3$predicty1))/sum(dat3$w_weight2*dat3$A)-sum ((1-dat3$A)*dat3$w_weight2*(dat3$Y-dat3$predicty0))/sum(dat3$w_weight2*(1-dat3$A))
+
+
+
+```
+
+
+
+```{r, out.width = "400px", eval=FALSE}
+#### assess balance of propensity weighting samples ############
+
+## Weighted analysis
+library(survey)
+library(tableone) 
+## Reorganizing data
+library(reshape2)
+## plotting
+library(ggplot2)
+vars<- c("age", "gender_", "race_",  "chrlungd_","nyh34", "hdef_4c","status_","robotic_","armusproctype","centerid") 
+catvar<-c("gender_", "race_",  "chrlungd_","nyh34", "hdef_4c","status_","robotic_","armusproctype","centerid") 
+tabUnmatched <- CreateTableOne(vars = vars, strata = "extub_or2", data = dat3,factorVars = catvar, test = FALSE)
+print(tabUnmatched, smd = TRUE)
+
+# overlap weighted data
+datOw <- svydesign(ids = ~ 1, data = dat3, weights = ~ w_weight)
+
+tabWeightedOw <- svyCreateTableOne(vars = vars, strata = "extub_or2", data = datOw, factorVars = catvar,test = FALSE)
+## Show table with SMD
+print(tabWeightedOw, smd = TRUE)
+
+
+# matching weighted data
+datMatch <- svydesign(ids = ~ 1, data = dat3, weights = ~ w_weight2)
+
+tabMatched <- svyCreateTableOne(vars = vars, strata = "extub_or2", data = datMatch, factorVars = catvar,test = FALSE)
+## Show table with SMD
+print(tabMatched, smd = TRUE)
+
+
+## Construct a data frame containing variable name and SMD from all methods
+dataPlot <- data.frame(variable   = rownames(ExtractSmd(tabUnmatched)),
+                       Unmatched  = as.numeric(ExtractSmd(tabUnmatched)),
+                       Matched    = as.numeric(ExtractSmd(tabMatched)),
+                      # Weighted   = as.numeric(ExtractSmd(tabWeighted)),
+                       WeightedOw = as.numeric(ExtractSmd(tabWeightedOw)))
+
+## Create long-format data for ggplot2
+dataPlotMelt <- melt(data          = dataPlot,
+                     id.vars       = c("variable"),
+                     variable.name = "Method",
+                     value.name    = "SMD")
+
+## Order variable names by magnitude of SMD
+varNames <- as.character(dataPlot$variable)[order(dataPlot$Unmatched)]
+
+## Order factor levels in the same order
+dataPlotMelt$variable <- factor(dataPlotMelt$variable,
+                                levels = varNames)
+
+## Plot the SMD using ggplot2
+ggplot(data = dataPlotMelt,
+       mapping = aes(x = variable, y = SMD, group = Method, color = Method)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 0.1, color = "black", size = 0.1) +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.key = element_blank())
+
+
+## present the SMD using table
+## Column bind tables
+resCombo <- cbind(print(tabUnmatched,  printToggle = FALSE),
+                  print(tabMatched,    printToggle = FALSE),
+                  #print(tabWeighted,   printToggle = FALSE),
+                  print(tabWeightedOw, printToggle = FALSE))
+
+## Add group name row, and rewrite column names
+resCombo <- rbind(Group = rep(c("treatment","control"), 4), resCombo)
+colnames(resCombo) <- c("Unmatched","","MW","""OW","")
+print(resCombo, quote = FALSE)
+
+write.csv(resCombo, file = ".../ps_smdtable.csv")
+
+
+```

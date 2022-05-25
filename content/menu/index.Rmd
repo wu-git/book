@@ -1,0 +1,9 @@
++++
+headless = true
++++
+
+- [Blogdown]({{< relref "/docs/blog-down/blog-down" >}})
+
+-[Collapsed]({{< relref "/docs/collapsed" >}})
+      -[3rd]({{< relref "/docs/collapsed/PS-Weighting" >}})
+      -[4th]({{< relref "/docs/collapsed/PSM" >}})
